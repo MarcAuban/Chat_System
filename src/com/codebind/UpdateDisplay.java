@@ -38,7 +38,7 @@ public class UpdateDisplay implements Runnable{
             try {
                 participants.setText(app.getUsersConnected().toString());
 
-                //System.out.println(sessionList);
+                System.out.println(sessionList);
                 if(sessionList.size()>0 && app.getUsersConnected().size()>1) {
                     for (Session s : sessionList) {
                         //System.out.println(s.getParticipants());
