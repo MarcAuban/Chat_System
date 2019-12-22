@@ -11,16 +11,14 @@ public class NewSession extends JFrame {
 
     private DefaultListModel<String> modelApp;
     private ChatSystem app;
-    private JLabel participants;
     private JLabel CurrentSession;
     private JList<String> listApp;
 
-    public NewSession(ChatSystem app, DefaultListModel<String> modelApp,JLabel participants,JLabel CurrentSession, JList<String> listApp) {
+    public NewSession(ChatSystem app, DefaultListModel<String> modelApp,JLabel CurrentSession, JList<String> listApp) {
 
         super("NewSession - ChatSystem");
         this.app = app;
         this.modelApp = modelApp;
-        this.participants = participants;
         this.CurrentSession = CurrentSession;
         this.listApp = listApp;
 
@@ -59,8 +57,6 @@ public class NewSession extends JFrame {
         app.getUser().newSession(ListUser);
 
         String pseudo = list1.getSelectedValue();
-
-        participants.setText(app.getUsersConnected().toString());
         modelApp.addElement(pseudo);
         listApp.setModel(modelApp);
         listApp.setSelectedIndex(listApp.getLastVisibleIndex());

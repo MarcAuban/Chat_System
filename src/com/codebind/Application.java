@@ -18,9 +18,11 @@ public class Application extends JFrame{
 	private JButton deleteUneSessionButton;
 	private JLabel NameUser;
 	private JLabel CurrentSession;
-	private JLabel ipAdress;
-	private JLabel participants;
+	private JLabel UtilisateurConnected;
+	private JScrollPane Scroll;
+	private JList listUserConnected;
 	private DefaultListModel<String> model = new DefaultListModel<>();
+	private DefaultListModel<String> modelUserConnected = new DefaultListModel<>();
 	private ChatSystem app;
 	private Session s;
 	private UpdateDisplay updateDisplay;
@@ -31,6 +33,9 @@ public class Application extends JFrame{
 		super("ChatSystem");
 		this.app = app;
 		this.s = null;
+
+		Scroll.setViewportView(textArea1);
+		Scroll.setWheelScrollingEnabled(true);
 
 		NameUser.setText("<html> Bienvenue "+ name + " <br> </html>");
 		Font font1 = new Font("SansSerif", Font.BOLD, 20);
@@ -54,9 +59,9 @@ public class Application extends JFrame{
 		menuBar.add(menu2);
 		setJMenuBar(menuBar);
 		model.clear();
-
-		ipAdress.setText(app.getUser().getIP());
-		participants.setText(app.getUsersConnected().toString());
+		listUserConnected.setFocusable(false);
+		listUserConnected.setOpaque(false);
+		UtilisateurConnected.setText("Utilisateur en ligne : ");
 
 		textField1.setEditable(true);
 		setContentPane(panel1);
@@ -130,7 +135,7 @@ public class Application extends JFrame{
 
 
 
-		updateDisplay = new UpdateDisplay(app,textArea1,list1,model, CurrentSession,participants);
+		updateDisplay = new UpdateDisplay(app,textArea1,list1,model, CurrentSession,modelUserConnected,listUserConnected);
 		Thread updatehistoryThread = new Thread(updateDisplay);
 		updatehistoryThread.start();
 
@@ -186,7 +191,7 @@ public class Application extends JFrame{
 		return app.getUser().getSessionFromParticipants(listUser);
 	}
 	public void SetNewSession(){
-		NewSession newSession = new NewSession(app, model, participants, CurrentSession, list1);
+		NewSession newSession = new NewSession(app, model, CurrentSession, list1);
 		newSession.setSize(400,400);
 		newSession.setVisible(true);
 		newSession.setLocationRelativeTo(null);

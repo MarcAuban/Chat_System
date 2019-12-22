@@ -15,10 +15,16 @@
           </grid>
         </constraints>
         <properties>
+          <autoscrolls value="false"/>
+          <focusable value="false"/>
           <font size="20"/>
           <model/>
+          <opaque value="false"/>
+          <requestFocusEnabled value="false"/>
           <selectedIndex value="-1"/>
+          <selectionBackground color="-4473925"/>
           <valueIsAdjusting value="false"/>
+          <verifyInputWhenFocusTarget value="false"/>
         </properties>
       </component>
       <component id="b0c4f" class="javax.swing.JButton" binding="cancelButton" default-binding="true">

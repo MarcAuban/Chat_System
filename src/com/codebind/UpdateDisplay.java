@@ -18,30 +18,38 @@ public class UpdateDisplay implements Runnable{
     private String pseudo;
     private Session session;
     private JLabel CurrentSession;
-    private JLabel participants;
     private boolean init = false ;
+    private DefaultListModel<String> modelUserConnected;
+    private JList listUserConnected;
 
-    UpdateDisplay(ChatSystem app, JTextArea textArea, JList listSession, DefaultListModel<String> model, JLabel CurrentSession,JLabel participants){
+    UpdateDisplay(ChatSystem app, JTextArea textArea, JList listSession, DefaultListModel<String> model, JLabel CurrentSession,DefaultListModel<String> modelUserconnected, JList listUserConnected){
         this.textArea = textArea;
         this.listSession = listSession;
         this.app = app;
         this.model = model;
         this.sessionList = app.getUser().getSessionList();
         this.CurrentSession = CurrentSession;
-        this.participants = participants;
         this.pseudo = null;
+        this.modelUserConnected = modelUserconnected;
+        this.listUserConnected = listUserConnected;
     }
 
     @Override
     public void run() {
         while (true){
             try {
-                participants.setText(app.getUsersConnected().toString());
+                modelUserConnected.clear();
+                for(User user : app.getUsersConnected()){
+                    if(!user.getPseudo().equals(app.getUser().getPseudo()) && !modelUserConnected.contains(user.getPseudo())){
+                        modelUserConnected.addElement(user.getPseudo());
+                    }
+                }
+                listUserConnected.setModel(modelUserConnected);
 
                 System.out.println(sessionList);
                 if(sessionList.size()>0 && app.getUsersConnected().size()>1) {
                     for (Session s : sessionList) {
-                        //System.out.println(s.getParticipants());
+                        System.out.println(s.getParticipants());
                         for (User user : s.getParticipants()) {
                             if(user==null){
 
