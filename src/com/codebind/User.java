@@ -51,7 +51,7 @@ public class User{
 			if(participants.containsAll(session.getParticipants()))
 				return session;
 		}
-		return newSession(participants);
+		return null;
 	}
 
 /**
