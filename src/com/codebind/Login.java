@@ -57,8 +57,6 @@ public class Login extends JFrame{
 
 	private void login(){
 		app.login(textField1.getText());
-		//app.addConnectedUser(new User("Morini","192.168.1.1"));
-		//app.addConnectedUser(new User("Jorini", "192.168.43.1"));
 		Application frame = new Application(app,textField1.getText());
 		frame.setSize(900,600);
 		frame.setVisible(true);

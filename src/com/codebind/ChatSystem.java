@@ -83,6 +83,7 @@ public class ChatSystem implements Runnable{
 			System.out.println("pseudo déjà pris");
 		}
 		else{
+
 			//a faire : charger l'user et son historique si il existe dejà
 
 			//création d'un nouveau user
@@ -280,6 +281,9 @@ public class ChatSystem implements Runnable{
 				participants.add(getUserFromPseudo(splitReceived[i]));
 			}
 			Session session = this.user.getSessionFromParticipants(participants);
+			if(session == null){
+				session = this.user.newSession(participants);
+			}
 			session.receivedMsg(sender, received.substring(received.indexOf("end")+4));
 		}
 	}

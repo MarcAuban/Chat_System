@@ -55,12 +55,6 @@ public class NewSession extends JFrame {
         ListUser.add(app.getUserFromPseudo(list1.getSelectedValue()));
         ListUser.add(app.getUser());
         app.getUser().newSession(ListUser);
-
-        String pseudo = list1.getSelectedValue();
-        modelApp.addElement(pseudo);
-        listApp.setModel(modelApp);
-        listApp.setSelectedIndex(listApp.getLastVisibleIndex());
-        CurrentSession.setText(pseudo);
     }
 
 }

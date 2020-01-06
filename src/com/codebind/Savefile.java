@@ -70,6 +70,7 @@ public class Savefile {
 	protected static User getUserFromSave(User user){
 		// "_" pour gitignore
 		Path path = Paths.get("savefiles","_" + user.getPseudo());
+
 		try {
 			//si le savefile existe
 			if(new File(path.toString()).exists()) {
@@ -79,6 +80,7 @@ public class Savefile {
 				//recuperer l'historique que si y'a déjà un savefile qui existe
 				if (line.hasNext()) {
 					int nbSessions = Integer.parseInt(line.next());
+					System.out.println("nbsession : " + nbSessions);
 					for (int i = 0; i < nbSessions; i++) {
 
 						ArrayList<User> participants = new ArrayList<>();

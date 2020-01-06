@@ -21,6 +21,7 @@ public class UpdateDisplay implements Runnable{
     private boolean init = false ;
     private DefaultListModel<String> modelUserConnected;
     private JList listUserConnected;
+    private boolean online = true;
 
     UpdateDisplay(ChatSystem app, JTextArea textArea, JList listSession, DefaultListModel<String> model, JLabel CurrentSession,DefaultListModel<String> modelUserconnected, JList listUserConnected){
         this.textArea = textArea;
@@ -36,7 +37,7 @@ public class UpdateDisplay implements Runnable{
 
     @Override
     public void run() {
-        while (true){
+        while (online){
             try {
                 modelUserConnected.clear();
                 for(User user : app.getUsersConnected()){
@@ -49,29 +50,19 @@ public class UpdateDisplay implements Runnable{
                 System.out.println(sessionList);
                 if(sessionList.size()>0 && app.getUsersConnected().size()>1) {
                     for (Session s : sessionList) {
-                        System.out.println(s.getParticipants());
                         for (User user : s.getParticipants()) {
-                            if(user==null){
-
-                            }
-                            else if (!user.getPseudo().equals(app.getUser().getPseudo())) {
+                            if (user!=null && !user.getPseudo().equals(app.getUser().getPseudo())) {
                                 pseudo = user.getPseudo();
                             }
                         }
+                        if(pseudo!=null && !s.isDisplayed()) {
+                            s.setDisplayed();
+                            model.addElement(pseudo);
+                            listSession.setModel(model);
+                            listSession.setSelectedIndex(listSession.getLastVisibleIndex());
+                            CurrentSession.setText(pseudo);
+                        }
                     }
-                }
-                //System.out.println(sessionList);
-
-                if(!model.contains(pseudo) && pseudo!=null) {
-                    model.addElement(pseudo);
-                    listSession.setModel(model);
-                    listSession.setSelectedIndex(listSession.getLastVisibleIndex());
-                    CurrentSession.setText(pseudo);
-                    ArrayList<User> UserList = new ArrayList<>();
-                    UserList.add(app.getUserFromPseudo(pseudo));
-                    UserList.add(app.getUser());
-                    session = app.getUser().getSessionFromParticipants(UserList);
-                    System.out.println("THREAD" + session.getParticipants());
                 }
 
                 if(session!=null) {
@@ -110,10 +101,16 @@ public class UpdateDisplay implements Runnable{
     }
     public void showHistory(Session session)
     {
-        textArea.setText("");
         for(Message m : session.getHistorique())
         {
-            textArea.append(m.toString());
+            if(!m.isDisplayed()) {
+                textArea.append(m.toString());
+                m.setDisplayed();
+            }
         }
+    }
+
+    public boolean deconnexion(){
+        return !online;
     }
 }

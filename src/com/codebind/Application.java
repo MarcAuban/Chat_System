@@ -100,14 +100,14 @@ public class Application extends JFrame{
 					if(!list1.isSelectionEmpty()) {
 						if(!CheckIsUserConnected(pseudo)){
 							textField1.setEditable(false);
-							s = returnSession();
+							s = SelectedSession();
 							CurrentSession.setText(list1.getSelectedValue());
 							updateDisplay.ChangeSession(s);
 							updateDisplay.showHistory(s);
 							JOptionPane.showMessageDialog(null, "Utilisateur pas connecté", "Erreur", JOptionPane.ERROR_MESSAGE);
 						}
 						else {
-							s = returnSession();
+							s = SelectedSession();
 							textArea1.setText("");
 							updateDisplay.showHistory(s);
 							updateDisplay.ChangeSession(s);
@@ -161,8 +161,6 @@ public class Application extends JFrame{
 		// Bouton Delete une session de la frame
 		deleteUneSessionButton.addActionListener(e -> DeleteSession());
 
-
-
 		NewPseudo =  new ChangerPseudo(app,NameUser);
 
 		//Bouton ChangerPseudo du menu de la frame
@@ -182,12 +180,14 @@ public class Application extends JFrame{
 		app.getUserList();
 	}
 
-	public Session returnSession()
+	public Session SelectedSession()
 	{
 		String pseudo = list1.getSelectedValue();
 		ArrayList<User> listUser = new ArrayList<>();
 		listUser.add(app.getUserFromPseudo(pseudo));
 		listUser.add(app.getUser());
+		System.out.println("participants : " + app.getUser().getSessionList().get(0).getParticipants());
+		System.out.println("listUSers : "+listUser);
 		return app.getUser().getSessionFromParticipants(listUser);
 	}
 	public void SetNewSession(){
@@ -200,6 +200,7 @@ public class Application extends JFrame{
 
 	public void deconnexion(){
 		app.deconnexion();
+		updateDisplay.deconnexion();
 		JFrame frame = new Login();
 		frame.setSize(300,300);
 		frame.setVisible(true);
@@ -212,7 +213,7 @@ public class Application extends JFrame{
 
 	public void SendMessage(String message){
 		if(!list1.isSelectionEmpty()) {
-			s = returnSession();
+			s = SelectedSession();
 			s.sendMsg(app.getUser(), message);
 			updateDisplay.ChangeSession(s);
 		}
