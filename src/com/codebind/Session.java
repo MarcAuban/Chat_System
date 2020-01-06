@@ -9,6 +9,7 @@ public class Session{
 
 	private ArrayList<Message> historique = new ArrayList<>();
 	private ArrayList<User> participants;
+	private boolean isDisplayed = false;
 
 /**
 	* @param participants la liste des utilisateurs qui sont dans cette session
@@ -60,5 +61,15 @@ public class Session{
 		}
 
 		this.historique.add(new Message(sender, txt));
+	}
+
+	public void setDisplayed()
+	{
+		this.isDisplayed = true;
+	}
+
+	public boolean isDisplayed()
+	{
+		return this.isDisplayed;
 	}
 }
