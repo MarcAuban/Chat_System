@@ -107,9 +107,10 @@ public class Application extends JFrame{
 							JOptionPane.showMessageDialog(null, "Utilisateur pas connecté", "Erreur", JOptionPane.ERROR_MESSAGE);
 						}
 						else {
+							if(s!=null) {
+								s.setAllMessagesDisplayed(false);
+							}
 							s = SelectedSession();
-							textArea1.setText("");
-							updateDisplay.showHistory(s);
 							updateDisplay.ChangeSession(s);
 							CurrentSession.setText(list1.getSelectedValue());
 							textField1.setEditable(true);
@@ -186,8 +187,6 @@ public class Application extends JFrame{
 		ArrayList<User> listUser = new ArrayList<>();
 		listUser.add(app.getUserFromPseudo(pseudo));
 		listUser.add(app.getUser());
-		System.out.println("participants : " + app.getUser().getSessionList().get(0).getParticipants());
-		System.out.println("listUSers : "+listUser);
 		return app.getUser().getSessionFromParticipants(listUser);
 	}
 	public void SetNewSession(){

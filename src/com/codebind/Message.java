@@ -52,13 +52,14 @@ public class Message{
 		return this.sender.getPseudo() + "\n" + this.txt + "\n" + this.dateformat.format(this.date) + "\n";
 	}
 
-	public void setDisplayed()
+	public void setDisplayed(boolean bool)
 	{
-		this.isDisplayed = true;
+		this.isDisplayed = bool;
 	}
 
 	public boolean isDisplayed()
 	{
 		return this.isDisplayed;
 	}
+
 }

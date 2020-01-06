@@ -94,6 +94,7 @@ public class UpdateDisplay implements Runnable{
     public void ChangeSession(Session session)
     {
         this.session = session;
+        wipeHistory();
     }
     public void ChangePseudo(String pseudo)
     {
@@ -105,9 +106,12 @@ public class UpdateDisplay implements Runnable{
         {
             if(!m.isDisplayed()) {
                 textArea.append(m.toString());
-                m.setDisplayed();
+                m.setDisplayed(true);
             }
         }
+    }
+    public void wipeHistory(){
+        textArea.setText("");
     }
 
     public boolean deconnexion(){

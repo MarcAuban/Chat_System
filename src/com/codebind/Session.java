@@ -72,4 +72,10 @@ public class Session{
 	{
 		return this.isDisplayed;
 	}
+
+	public void setAllMessagesDisplayed(boolean bool){
+		for(Message m : this.historique){
+			m.setDisplayed(bool);
+		}
+	}
 }
