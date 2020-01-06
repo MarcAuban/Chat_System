@@ -25,7 +25,15 @@ public class Savefile {
 	protected static void save(User user){
 		// "_" pour gitignore
 		Path path = Paths.get("savefiles","_" + user.getPseudo());
+		Path directory = Paths.get("savefiles");
 		try {
+			//créér le dossier si il existe pas
+			File savefiles = new File(directory.toString());
+			if(!savefiles.exists()){
+				if(!savefiles.mkdir()){
+					throw new IOException();
+				}
+			}
 			//si le savefile existe
 			if(new File(path.toString()).exists()) {
 				Files.delete(path);
