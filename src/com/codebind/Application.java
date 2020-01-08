@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.plaf.basic.BasicSliderUI;
 
 
 public class Application extends JFrame{
@@ -15,7 +16,6 @@ public class Application extends JFrame{
 	private ChangerPseudo NewPseudo;
 	private JList<String> list1;
 	private JTextField textField1;
-	private JTextArea textArea1;
 	private JButton creerUneSessionButton;
 	private JButton deleteUneSessionButton;
 	private JLabel NameUser;
@@ -23,6 +23,8 @@ public class Application extends JFrame{
 	private JLabel UtilisateurConnected;
 	private JScrollPane Scroll;
 	private JList listUserConnected;
+	private JPanel PanelMessage;
+	private JTextPane textPane;
 	private DefaultListModel<String> model = new DefaultListModel<>();
 	private DefaultListModel<String> modelUserConnected = new DefaultListModel<>();
 	private ChatSystem app;
@@ -35,8 +37,7 @@ public class Application extends JFrame{
 		super("ChatSystem");
 		this.app = app;
 		this.s = null;
-
-		Scroll.setViewportView(textArea1);
+		Scroll.setViewportView(textPane);
 		Scroll.setWheelScrollingEnabled(true);
 
 		NameUser.setText("<html> Bienvenue "+ name + " <br> </html>");
@@ -150,7 +151,7 @@ public class Application extends JFrame{
 			}
 		});
 
-		updateDisplay = new UpdateDisplay(app,textArea1,list1,model, CurrentSession,modelUserConnected,listUserConnected);
+		updateDisplay = new UpdateDisplay(app,Scroll,textPane,textField1,list1,model, CurrentSession,modelUserConnected,listUserConnected);
 		Thread updatehistoryThread = new Thread(updateDisplay);
 		updatehistoryThread.start();
 
@@ -183,11 +184,9 @@ public class Application extends JFrame{
 			NewPseudo.setVisible(true);
 			NewPseudo.setLocationRelativeTo(null);
 		});
-		SwingUtilities.invokeLater(new Runnable() {
+		SwingUtilities.invokeLater(()-> {
 			JScrollBar scrollBar = Scroll.getVerticalScrollBar();
-			public void run() {
-				scrollBar.setValue(scrollBar.getMaximum());
-			}
+			scrollBar.setValue(scrollBar.getMaximum());
 		});
 	}
 
@@ -255,6 +254,6 @@ public class Application extends JFrame{
 		list1.setModel(model);
 
 		CurrentSession.setText("");
-		textArea1.setText("");
+		textPane.setText("");
 	}
 }

@@ -1,6 +1,11 @@
 package com.codebind;
 
 import javax.swing.*;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
+import java.awt.*;
 import java.lang.Thread;
 import java.util.ArrayList;
 
@@ -10,7 +15,7 @@ import java.util.ArrayList;
  */
 public class UpdateDisplay implements Runnable{
 
-    private JTextArea textArea;
+    private JTextPane textPane;
     private JList listSession;
 	private ArrayList<Session> sessionList;
     private DefaultListModel<String> model;
@@ -22,9 +27,14 @@ public class UpdateDisplay implements Runnable{
     private DefaultListModel<String> modelUserConnected;
     private JList listUserConnected;
     private boolean online = true;
+    private JTextField textField;
+    private JScrollPane Scroll;
+    private StyledDocument doc;
 
-    UpdateDisplay(ChatSystem app, JTextArea textArea, JList listSession, DefaultListModel<String> model, JLabel CurrentSession,DefaultListModel<String> modelUserconnected, JList listUserConnected){
-        this.textArea = textArea;
+    UpdateDisplay(ChatSystem app,JScrollPane Scroll ,JTextPane textPane, JTextField textField , JList listSession, DefaultListModel<String> model, JLabel CurrentSession,DefaultListModel<String> modelUserconnected, JList listUserConnected){
+        this.textPane = textPane;
+        this.textField = textField;
+        this.doc = textPane.getStyledDocument();
         this.listSession = listSession;
         this.app = app;
         this.model = model;
@@ -33,6 +43,7 @@ public class UpdateDisplay implements Runnable{
         this.pseudo = null;
         this.modelUserConnected = modelUserconnected;
         this.listUserConnected = listUserConnected;
+        this.Scroll = Scroll;
     }
 
     @Override
@@ -46,9 +57,7 @@ public class UpdateDisplay implements Runnable{
                     }
                 }
 
-                System.out.println("SelectedIndex :" +listSession.getSelectedValue());
                 listUserConnected.setModel(modelUserConnected);
-                System.out.println(sessionList);
 
                 if(sessionList.size()>0 && app.getUsersConnected().size()>1) {
                     for (Session s : sessionList) {
@@ -68,7 +77,11 @@ public class UpdateDisplay implements Runnable{
                 }
 
                 if(session!=null) {
+                    textField.setEditable(true);
                     showHistory(session);
+                }
+                else{
+                    textField.setEditable(false);
                 }
 
                 if(!init)
@@ -90,7 +103,6 @@ public class UpdateDisplay implements Runnable{
             listSession.setSelectedIndex(listSession.getLastVisibleIndex()+1);
             System.out.println(model.toString());
             init = true;
-            System.out.println("Initialisation  " + listSession.getLastVisibleIndex());
         }
     }
 
@@ -103,7 +115,7 @@ public class UpdateDisplay implements Runnable{
         wipeHistory();
     }
     public void ChangeIndex(){
-        textArea.setText("");
+        textPane.setText("");
     }
     
     public void ChangePseudo(String pseudo)
@@ -112,16 +124,40 @@ public class UpdateDisplay implements Runnable{
     }
     public void showHistory(Session session)
     {
+
+        SimpleAttributeSet rightAlign = new SimpleAttributeSet();
+        StyleConstants.setAlignment(rightAlign,StyleConstants.ALIGN_RIGHT);
+        SimpleAttributeSet leftAlign = new SimpleAttributeSet();
+        StyleConstants.setAlignment(leftAlign,StyleConstants.ALIGN_LEFT);
+
         for(Message m : session.getHistorique())
         {
+            int avantMessage = doc.getLength();
             if(!m.isDisplayed()) {
-                textArea.append(m.toString());
+                try {
+                    //Le message nous appartient
+                    if(m.getSender().getPseudo().equals(app.getUser().getPseudo())) {
+                        doc.insertString(doc.getLength(),m.toString(),rightAlign);
+                        doc.setParagraphAttributes(avantMessage,doc.getLength(),rightAlign,false);
+                    }
+                    else{
+                        doc.insertString(doc.getLength(),m.toString(),leftAlign);
+                        doc.setParagraphAttributes(avantMessage,doc.getLength(),leftAlign,false);
+                    }
+
+                }
+                catch (BadLocationException e) {
+                    e.printStackTrace();
+                }
                 m.setDisplayed(true);
+
+                JScrollBar scrollBar = Scroll.getVerticalScrollBar();
+                scrollBar.setValue(scrollBar.getMaximum());
             }
         }
     }
     public void wipeHistory(){
-        textArea.setText("");
+        textPane.setText("");
     }
 
     public boolean deconnexion(){
