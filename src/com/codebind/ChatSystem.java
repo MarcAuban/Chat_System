@@ -105,10 +105,13 @@ public class ChatSystem implements Runnable{
 					continue;
 
 				List<InterfaceAddress> addresses = iface.getInterfaceAddresses();
-				InterfaceAddress address = addresses.get(0);
-				myIP = address.getAddress().getHostAddress();
-				broadcastIP = address.getBroadcast().getHostAddress();
-				System.out.println(broadcastIP);
+				myIP = addresses.get(0).getAddress().getHostAddress();
+				for(InterfaceAddress address : addresses) {
+					InetAddress broadcast = address.getBroadcast();
+					if(broadcast!=null)
+						broadcastIP = broadcast.getHostAddress();
+					System.out.println(broadcastIP);
+				}
 			}
 		}
 		catch (SocketException e) {
