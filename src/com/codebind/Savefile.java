@@ -65,7 +65,6 @@ public class Savefile {
 	/**
 	 * recupère l'historique si une sauvegarde existe
 	 * @param user un utilisateur qui veut se connecter
-	 * @return l'utilisatuer avec ses sessions et leur historique remplies
 	 */
 	protected static void getUserFromSave(User user, ArrayList<User> userList){
 		// "_" pour gitignore
