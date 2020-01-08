@@ -6,6 +6,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.JFrame;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 
 public class Application extends JFrame{
@@ -100,10 +102,10 @@ public class Application extends JFrame{
 					if(!list1.isSelectionEmpty()) {
 						if(!CheckIsUserConnected(pseudo)){
 							textField1.setEditable(false);
-							s = SelectedSession();
+							//s = SelectedSession();
 							CurrentSession.setText(list1.getSelectedValue());
-							updateDisplay.ChangeSession(s);
-							updateDisplay.showHistory(s);
+							//updateDisplay.ChangeSession(s);
+							//updateDisplay.showHistory(s);
 							JOptionPane.showMessageDialog(null, "Utilisateur pas connecté", "Erreur", JOptionPane.ERROR_MESSAGE);
 						}
 						else {
@@ -112,6 +114,7 @@ public class Application extends JFrame{
 							}
 							s = SelectedSession();
 							updateDisplay.ChangeSession(s);
+							updateDisplay.ChangeIndex();
 							CurrentSession.setText(list1.getSelectedValue());
 							textField1.setEditable(true);
 						}
@@ -119,7 +122,20 @@ public class Application extends JFrame{
 				}
 			}
 		});
-
+		list1.addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				if(s!=null) {
+					s.setAllMessagesDisplayed(false);
+				}
+				s = SelectedSession();
+				updateDisplay.ChangeSession(s);
+				updateDisplay.ChangeIndex();
+				CurrentSession.setText(list1.getSelectedValue());
+				textField1.setEditable(true);
+				System.out.println("Component added");
+			}
+		});
 
 		textField1.addKeyListener(new KeyAdapter() { // Enter KEY dans le textField -> Envoie message et print dans le textArea
 			@Override
@@ -134,12 +150,9 @@ public class Application extends JFrame{
 			}
 		});
 
-
-
 		updateDisplay = new UpdateDisplay(app,textArea1,list1,model, CurrentSession,modelUserConnected,listUserConnected);
 		Thread updatehistoryThread = new Thread(updateDisplay);
 		updatehistoryThread.start();
-
 
 		creerUneSessionButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -170,11 +183,13 @@ public class Application extends JFrame{
 			NewPseudo.setVisible(true);
 			NewPseudo.setLocationRelativeTo(null);
 		});
+
+
 	}
 
 
 	public boolean CheckIsUserConnected(String pseudo){
-		return app.getUserFromPseudo(pseudo)!=null;
+		return app.getUserFromPseudo(pseudo).isOnline();
 	}
 
 	public void getUserList(){

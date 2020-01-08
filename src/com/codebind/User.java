@@ -24,7 +24,7 @@ public class User{
 
 	@Override
 	public String toString(){
-		return this.pseudo + "\n" + this.ip + "\nonline:" + this.isOnline;
+		return this.pseudo + "\n" + this.ip;
 	}
 
 	protected String getPseudo(){

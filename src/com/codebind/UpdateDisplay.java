@@ -18,7 +18,7 @@ public class UpdateDisplay implements Runnable{
     private String pseudo;
     private Session session;
     private JLabel CurrentSession;
-    private boolean init = false ;
+    private boolean init = false;
     private DefaultListModel<String> modelUserConnected;
     private JList listUserConnected;
     private boolean online = true;
@@ -45,9 +45,11 @@ public class UpdateDisplay implements Runnable{
                         modelUserConnected.addElement(user.getPseudo());
                     }
                 }
-                listUserConnected.setModel(modelUserConnected);
 
+                System.out.println("SelectedIndex :" +listSession.getSelectedValue());
+                listUserConnected.setModel(modelUserConnected);
                 System.out.println(sessionList);
+
                 if(sessionList.size()>0 && app.getUsersConnected().size()>1) {
                     for (Session s : sessionList) {
                         for (User user : s.getParticipants()) {
@@ -65,6 +67,7 @@ public class UpdateDisplay implements Runnable{
                     }
                 }
 
+
                 if(session!=null) {
                     showHistory(session);
                 }
@@ -73,6 +76,7 @@ public class UpdateDisplay implements Runnable{
                 {
                     initialisation();
                 }
+
                 Thread.sleep(1000);
             }
             catch (InterruptedException e)
@@ -89,13 +93,20 @@ public class UpdateDisplay implements Runnable{
             init = true;
             System.out.println("Initialisation  " + listSession.getLastVisibleIndex());
         }
-
     }
+
     public void ChangeSession(Session session)
     {
+        if(this.session!=null) {
+            this.session.setAllMessagesDisplayed(false);
+        }
         this.session = session;
         wipeHistory();
     }
+    public void ChangeIndex(){
+        textArea.setText("");
+    }
+    
     public void ChangePseudo(String pseudo)
     {
         this.pseudo = pseudo;
