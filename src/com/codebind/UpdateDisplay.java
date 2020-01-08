@@ -67,7 +67,6 @@ public class UpdateDisplay implements Runnable{
                     }
                 }
 
-
                 if(session!=null) {
                     showHistory(session);
                 }

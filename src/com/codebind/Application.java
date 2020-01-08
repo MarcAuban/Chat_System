@@ -125,15 +125,15 @@ public class Application extends JFrame{
 		list1.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
+				s = SelectedSession();
 				if(s!=null) {
 					s.setAllMessagesDisplayed(false);
+					updateDisplay.ChangeSession(s);
+					updateDisplay.ChangeIndex();
+					CurrentSession.setText(list1.getSelectedValue());
+					textField1.setEditable(true);
+					System.out.println("Component added");
 				}
-				s = SelectedSession();
-				updateDisplay.ChangeSession(s);
-				updateDisplay.ChangeIndex();
-				CurrentSession.setText(list1.getSelectedValue());
-				textField1.setEditable(true);
-				System.out.println("Component added");
 			}
 		});
 
@@ -183,8 +183,12 @@ public class Application extends JFrame{
 			NewPseudo.setVisible(true);
 			NewPseudo.setLocationRelativeTo(null);
 		});
-
-
+		SwingUtilities.invokeLater(new Runnable() {
+			JScrollBar scrollBar = Scroll.getVerticalScrollBar();
+			public void run() {
+				scrollBar.setValue(scrollBar.getMaximum());
+			}
+		});
 	}
 
 
@@ -198,11 +202,18 @@ public class Application extends JFrame{
 
 	public Session SelectedSession()
 	{
-		String pseudo = list1.getSelectedValue();
-		ArrayList<User> listUser = new ArrayList<>();
-		listUser.add(app.getUserFromPseudo(pseudo));
-		listUser.add(app.getUser());
-		return app.getUser().getSessionFromParticipants(listUser);
+		if(list1.isSelectionEmpty()){
+			return null;
+		}
+		else
+		{
+			String pseudo = list1.getSelectedValue();
+			ArrayList<User> listUser = new ArrayList<>();
+			listUser.add(app.getUserFromPseudo(pseudo));
+			listUser.add(app.getUser());
+			return app.getUser().getSessionFromParticipants(listUser);
+		}
+
 	}
 	public void SetNewSession(){
 		NewSession newSession = new NewSession(app, model, CurrentSession, list1);
@@ -233,16 +244,8 @@ public class Application extends JFrame{
 		}
 	}
 
-	public ArrayList<User> AddUserToArray(User user){
-		ArrayList<User> participantsSession = new ArrayList<>();
-		participantsSession.add(user);
-		participantsSession.add(app.getUser());
-		return participantsSession;
-	}
-
 	public void DeleteSession(){
-		User user = app.getUserFromPseudo(list1.getSelectedValue());
-		s = app.getUser().getSessionFromParticipants(AddUserToArray(user));
+		s = SelectedSession();
 		app.getUser().delSession(s);
 
 		updateDisplay.ChangeSession(null);
