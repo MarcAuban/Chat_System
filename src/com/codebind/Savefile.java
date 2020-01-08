@@ -67,7 +67,7 @@ public class Savefile {
 	 * @param user un utilisateur qui veut se connecter
 	 * @return l'utilisatuer avec ses sessions et leur historique remplies
 	 */
-	protected static User getUserFromSave(User user){
+	protected static void getUserFromSave(User user, ArrayList<User> userList){
 		// "_" pour gitignore
 		Path path = Paths.get("savefiles","_" + user.getPseudo());
 
@@ -89,7 +89,13 @@ public class Savefile {
 						for (int j = 0; j < nbParticipants; j++) {
 							String pseudo = line.next();
 							String ip = line.next();
-							participants.add(new User(pseudo, ip));
+
+							User participant = getUserFromPseudo(userList, pseudo, ip);
+							if(participant==null){//si il se trouve pas dans userLsit c'est qu'il est déco
+								participant = new User(pseudo, ip);
+								participant.setOnline(false);
+							}
+							participants.add(participant);
 						}
 
 						ArrayList<Message> historique = new ArrayList<>();
@@ -115,6 +121,14 @@ public class Savefile {
 		catch (IOException | ParseException e) {
 			e.printStackTrace();
 		}
-		return user;
+	}
+
+	protected static User getUserFromPseudo(ArrayList<User> userList, String pseudo, String ip){
+		for(User user : userList) {
+			if (user.getPseudo().equals(pseudo) && user.getIP().equals(ip)) {
+				return user;
+			}
+		}
+		return null;
 	}
 }

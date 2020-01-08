@@ -1,6 +1,5 @@
 package com.codebind;
 
-import java.lang.reflect.Array;
 import java.net.*;
 import java.util.ArrayList;
 import java.lang.Thread;
@@ -88,8 +87,9 @@ public class ChatSystem implements Runnable{
 			//a faire : charger l'user et son historique si il existe dejà
 
 			//création d'un nouveau user
-			this.user = Savefile.getUserFromSave(new User(pseudo, myIP));
+			this.user = new User(pseudo, myIP);
 			this.addConnectedUser(this.user);
+			Savefile.getUserFromSave(this.user, this.userList);
 			this.notifyConnected();
 		}
 	}
@@ -121,13 +121,6 @@ public class ChatSystem implements Runnable{
 	*/
 	protected User getUser(){
 		return this.user;
-	}
-
-	/**
-	 * @return la liste de tous les utilisateurs même déconnectés
-	 */
-	protected ArrayList<User> getAllUsers(){
-		return this.userList;
 	}
 
 	/**
