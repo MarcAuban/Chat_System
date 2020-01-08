@@ -1,7 +1,6 @@
 package com.codebind;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 /**
 * Un utilisateur a un pseudo, une ip et un historique de sessions, son pseudo est unique
@@ -11,6 +10,7 @@ public class User{
 	private String pseudo;
 	private String ip;
 	private ArrayList<Session> sessionList = new ArrayList<>();
+	private boolean isOnline;
 
 /**
 	* @param pseudo le pseudo de l'utilisateur
@@ -19,11 +19,12 @@ public class User{
 	User(String pseudo, String ip){
 		this.pseudo=pseudo;
 		this.ip=ip;
+		this.isOnline=true;
 	}
 
 	@Override
 	public String toString(){
-		return this.pseudo + "\n" + this.ip;
+		return this.pseudo + "\n" + this.ip + "\nonline:" + this.isOnline;
 	}
 
 	protected String getPseudo(){
@@ -73,5 +74,13 @@ public class User{
 		Session session = new Session(participants);
 		this.sessionList.add(session);
 		return session;
+	}
+
+	protected boolean isOnline(){
+		return this.isOnline;
+	}
+
+	protected void setOnline(boolean online){
+		this.isOnline=online;
 	}
 }

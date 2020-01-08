@@ -142,6 +142,15 @@ public class ChatSystem implements Runnable{
 		return null;
 	}
 
+	protected User getUserFromPseudo(String pseudo, String ip){
+		for(User user : this.userList) {
+			if (user.getPseudo().equals(pseudo) && user.getIP().equals(ip)) {
+				return user;
+			}
+		}
+		return null;
+	}
+
 /**
 	* @param newPseudo le nouveau pseudo de l'utilisateur
 	*/
@@ -237,7 +246,11 @@ public class ChatSystem implements Runnable{
 			192.34.2.1"
 			*/
 			//splitReceived[1] est le pseudo et splitReceived[2] est l'ip de l'utilisateur
-			this.addConnectedUser(new User(splitReceived[1], splitReceived[2]));
+			User connectedUser = getUserFromPseudo(splitReceived[1], splitReceived[2]);
+			if(connectedUser==null)
+				this.addConnectedUser(new User(splitReceived[1], splitReceived[2]));
+			else//on l'a déjà enregistré
+				connectedUser.setOnline(true);
 		}
 
 		if(splitReceived[0].equals("changerPseudo")){
@@ -257,7 +270,7 @@ public class ChatSystem implements Runnable{
 			jean marc
 			192.34.2.1
 			*/
-			this.userList.remove(getUserFromPseudo(splitReceived[1]));
+			getUserFromPseudo(splitReceived[1]).setOnline(false);
 			this.printUserList();
 		}
 

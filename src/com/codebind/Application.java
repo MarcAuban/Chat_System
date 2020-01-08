@@ -214,7 +214,7 @@ public class Application extends JFrame{
 		if(!list1.isSelectionEmpty()) {
 			s = SelectedSession();
 			s.sendMsg(app.getUser(), message);
-			updateDisplay.ChangeSession(s);
+			//updateDisplay.ChangeSession(s);
 		}
 	}
 
