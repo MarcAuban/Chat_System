@@ -1,5 +1,6 @@
 package com.codebind;
 
+import java.lang.reflect.Array;
 import java.net.*;
 import java.util.ArrayList;
 import java.lang.Thread;
@@ -42,7 +43,7 @@ public class ChatSystem implements Runnable{
 		this.receiver=receiver;
 		Thread receiverThread = new Thread(this.receiver);
 		receiverThread.start();
-		this.getUserList();
+		this.requestUserList();
 	}
 
 	@Override
@@ -122,14 +123,25 @@ public class ChatSystem implements Runnable{
 		return this.user;
 	}
 
-/**
-	* @return la liste des utilisateurs connectés
-	*/
-	protected ArrayList<User> getUsersConnected(){
+	/**
+	 * @return la liste de tous les utilisateurs même déconnectés
+	 */
+	protected ArrayList<User> getAllUsers(){
 		return this.userList;
 	}
 
-	protected void getUserList(){
+	/**
+	 * @return la liste des utilisateurs connectés
+	 */
+	protected ArrayList<User> getUsersConnected(){
+		ArrayList<User> usersConnected = new ArrayList<>();
+		for(User user : this.userList)
+			if(user.isOnline())
+				usersConnected.add(user);
+		return usersConnected;
+	}
+
+	protected void requestUserList(){
 		Sender.broadcast("getUserList\n" + myIP);
 	}
 

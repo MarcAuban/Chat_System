@@ -178,7 +178,7 @@ public class Application extends JFrame{
 	}
 
 	public void getUserList(){
-		app.getUserList();
+		app.requestUserList();
 	}
 
 	public Session SelectedSession()
