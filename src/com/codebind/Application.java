@@ -3,10 +3,7 @@ package com.codebind;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 
 
@@ -64,7 +61,7 @@ public class Application extends JFrame{
 		listUserConnected.setOpaque(false);
 		UtilisateurConnected.setText("Utilisateurs connectés : ");
 
-		textField1.setEditable(true);
+		textField1.setEditable(false);
 		setContentPane(panel1);
 
 		addWindowListener(new java.awt.event.WindowAdapter() { //Bouton X de la frame
@@ -101,12 +98,10 @@ public class Application extends JFrame{
 					String pseudo = list1.getSelectedValue();
 					if(!list1.isSelectionEmpty()) {
 						if(!CheckIsUserConnected(pseudo)){
-							textField1.setEditable(false);
-							//s = SelectedSession();
 							CurrentSession.setText(list1.getSelectedValue());
-							//updateDisplay.ChangeSession(s);
-							//updateDisplay.showHistory(s);
 							JOptionPane.showMessageDialog(null, "Utilisateur pas connecté", "Erreur", JOptionPane.ERROR_MESSAGE);
+							textField1.setEditable(false);
+							updateDisplay.ChangeSession(null);
 						}
 						else {
 							if(s!=null) {
@@ -139,9 +134,14 @@ public class Application extends JFrame{
 			public void keyPressed(KeyEvent e) {
 				super.keyPressed(e);
 				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-					if(!textField1.getText().equals(" ")) {
+					if(!textField1.getText().equals(" ") && CheckIsUserConnected(list1.getSelectedValue())) {
 						SendMessage(textField1.getText());
 						textField1.setText("");
+					}else{
+						textField1.setEditable(false);
+						textField1.setText("");
+						JOptionPane.showMessageDialog(null, "Utilisateur pas connecté", "Erreur", JOptionPane.ERROR_MESSAGE);
+						updateDisplay.ChangeSession(null);
 					}
 				}
 			}
