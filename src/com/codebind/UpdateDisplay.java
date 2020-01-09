@@ -5,7 +5,6 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
-import java.awt.*;
 import java.lang.Thread;
 import java.util.ArrayList;
 
@@ -16,7 +15,7 @@ import java.util.ArrayList;
 public class UpdateDisplay implements Runnable{
 
     private JTextPane textPane;
-    private JList listSession;
+    private JList<String> listSession;
 	private ArrayList<Session> sessionList;
     private DefaultListModel<String> model;
     private ChatSystem app;
@@ -25,13 +24,13 @@ public class UpdateDisplay implements Runnable{
     private JLabel CurrentSession;
     private boolean init = false;
     private DefaultListModel<String> modelUserConnected;
-    private JList listUserConnected;
+    private JList<String> listUserConnected;
     private boolean online = true;
     private JTextField textField;
     private JScrollPane Scroll;
     private StyledDocument doc;
 
-    UpdateDisplay(ChatSystem app,JScrollPane Scroll ,JTextPane textPane, JTextField textField , JList listSession, DefaultListModel<String> model, JLabel CurrentSession,DefaultListModel<String> modelUserconnected, JList listUserConnected){
+    UpdateDisplay(ChatSystem app, JScrollPane Scroll , JTextPane textPane, JTextField textField , JList<String> listSession, DefaultListModel<String> model, JLabel CurrentSession, DefaultListModel<String> modelUserconnected, JList<String> listUserConnected){
         this.textPane = textPane;
         this.textField = textField;
         this.doc = textPane.getStyledDocument();
@@ -48,7 +47,7 @@ public class UpdateDisplay implements Runnable{
 
     @Override
     public void run() {
-        while (online){
+        while (this.online){
             try {
                 modelUserConnected.clear();
                 for(User user : app.getUsersConnected()){
@@ -160,7 +159,7 @@ public class UpdateDisplay implements Runnable{
         textPane.setText("");
     }
 
-    public boolean deconnexion(){
-        return !online;
+    public void deconnexion(){
+        this.online=false;
     }
 }

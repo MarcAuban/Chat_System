@@ -26,6 +26,7 @@
             </constraints>
             <properties>
               <font size="14"/>
+              <model/>
             </properties>
           </component>
         </children>
@@ -119,7 +120,7 @@
           <defaultCapable value="true"/>
           <focusPainted value="true"/>
           <font size="12"/>
-          <text value="Créer une session"/>
+          <text value="Créer une conversation"/>
         </properties>
       </component>
       <component id="54ec6" class="javax.swing.JButton" binding="deleteUneSessionButton" default-binding="true">
@@ -128,7 +129,7 @@
         </constraints>
         <properties>
           <font size="12"/>
-          <text value="Delete une session"/>
+          <text value="Supprimer une conversation"/>
         </properties>
       </component>
       <component id="b529c" class="javax.swing.JLabel" binding="CurrentSession">

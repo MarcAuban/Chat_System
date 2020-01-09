@@ -9,18 +9,12 @@ public class NewSession extends JFrame {
     public JButton cancelButton;
     public JButton OKButton;
 
-    private DefaultListModel<String> modelApp;
     private ChatSystem app;
-    private JLabel CurrentSession;
-    private JList<String> listApp;
 
-    public NewSession(ChatSystem app, DefaultListModel<String> modelApp,JLabel CurrentSession, JList<String> listApp) {
+    public NewSession(ChatSystem app, DefaultListModel<String> modelApp) {
 
         super("NewSession - ChatSystem");
         this.app = app;
-        this.modelApp = modelApp;
-        this.CurrentSession = CurrentSession;
-        this.listApp = listApp;
 
         setContentPane(panel1);
 

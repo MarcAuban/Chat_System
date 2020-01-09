@@ -3,12 +3,11 @@ package com.codebind;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import javax.swing.JFrame;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.plaf.basic.BasicSliderUI;
 
 
 public class Application extends JFrame{
@@ -22,11 +21,10 @@ public class Application extends JFrame{
 	private JLabel CurrentSession;
 	private JLabel UtilisateurConnected;
 	private JScrollPane Scroll;
-	private JList listUserConnected;
+	private JList<String> listUserConnected;
 	private JPanel PanelMessage;
 	private JTextPane textPane;
 	private DefaultListModel<String> model = new DefaultListModel<>();
-	private DefaultListModel<String> modelUserConnected = new DefaultListModel<>();
 	private ChatSystem app;
 	private Session s;
 	private UpdateDisplay updateDisplay;
@@ -64,7 +62,7 @@ public class Application extends JFrame{
 		model.clear();
 		listUserConnected.setFocusable(false);
 		listUserConnected.setOpaque(false);
-		UtilisateurConnected.setText("Utilisateur en ligne : ");
+		UtilisateurConnected.setText("Utilisateurs connectés : ");
 
 		textField1.setEditable(true);
 		setContentPane(panel1);
@@ -124,18 +122,15 @@ public class Application extends JFrame{
 				}
 			}
 		});
-		list1.addListSelectionListener(new ListSelectionListener() {
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				s = SelectedSession();
-				if(s!=null) {
-					s.setAllMessagesDisplayed(false);
-					updateDisplay.ChangeSession(s);
-					updateDisplay.ChangeIndex();
-					CurrentSession.setText(list1.getSelectedValue());
-					textField1.setEditable(true);
-					System.out.println("Component added");
-				}
+		list1.addListSelectionListener(e -> {
+			s = SelectedSession();
+			if(s!=null) {
+				s.setAllMessagesDisplayed(false);
+				updateDisplay.ChangeSession(s);
+				updateDisplay.ChangeIndex();
+				CurrentSession.setText(list1.getSelectedValue());
+				textField1.setEditable(true);
+				System.out.println("Component added");
 			}
 		});
 
@@ -152,7 +147,8 @@ public class Application extends JFrame{
 			}
 		});
 
-		updateDisplay = new UpdateDisplay(app,Scroll,textPane,textField1,list1,model, CurrentSession,modelUserConnected,listUserConnected);
+		DefaultListModel<String> modelUserConnected = new DefaultListModel<>();
+		updateDisplay = new UpdateDisplay(app,Scroll,textPane,textField1,list1,model, CurrentSession, modelUserConnected,listUserConnected);
 		Thread updatehistoryThread = new Thread(updateDisplay);
 		updatehistoryThread.start();
 
@@ -181,7 +177,7 @@ public class Application extends JFrame{
 
 		//Bouton ChangerPseudo du menu de la frame
 		changerpseudo.addActionListener(e -> {
-			NewPseudo.setSize(400,250);
+			NewPseudo.setSize(300,150);
 			NewPseudo.setVisible(true);
 			NewPseudo.setLocationRelativeTo(null);
 		});
@@ -216,8 +212,8 @@ public class Application extends JFrame{
 
 	}
 	public void SetNewSession(){
-		NewSession newSession = new NewSession(app, model, CurrentSession, list1);
-		newSession.setSize(400,400);
+		NewSession newSession = new NewSession(app, model);
+		newSession.setSize(500,400);
 		newSession.setVisible(true);
 		newSession.setLocationRelativeTo(null);
 		textField1.setEditable(true);
@@ -247,12 +243,14 @@ public class Application extends JFrame{
 
 	public void DeleteSession(){
 		s = SelectedSession();
-		app.getUser().delSession(s);
 
 		updateDisplay.ChangeSession(null);
 		updateDisplay.ChangePseudo(null);
 
-		model.remove(list1.getSelectedIndex());
+		if(s!=null){
+			app.getUser().delSession(s);
+			model.remove(list1.getSelectedIndex());
+		}
 		list1.setModel(model);
 
 		CurrentSession.setText("");

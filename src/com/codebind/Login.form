@@ -33,7 +33,7 @@
         </constraints>
         <properties>
           <font size="18" style="1"/>
-          <text value="Login"/>
+          <text value="Entrez votre pseudo"/>
         </properties>
       </component>
       <hspacer id="e80ea">

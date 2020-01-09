@@ -30,11 +30,7 @@ public class Session{
 		this.historique=historique;
 	}
 
-	protected void setParticipants(ArrayList<User> participants){
-		this.participants=participants;
-	}
-
-/**
+	/**
 	* @param sender l'utilisateur qui a envoyé le message
 	* @param txt le message
 	*/
