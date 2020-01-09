@@ -89,6 +89,7 @@ public class Application extends JFrame{
 		quitter.addActionListener(e -> {
 			deconnexionWithOut();
 			dispose();
+			System.exit(0);
 		});
 
 		// Bouton Quitter du menu de la frame
@@ -231,6 +232,7 @@ public class Application extends JFrame{
 		frame.setLocationRelativeTo(null);
 	}
 	public void deconnexionWithOut(){
+		updateDisplay.deconnexion();
 		app.deconnexion();
 	}
 
