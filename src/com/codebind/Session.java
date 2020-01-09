@@ -59,9 +59,9 @@ public class Session{
 		this.historique.add(new Message(sender, txt));
 	}
 
-	public void setDisplayed()
+	public void setDisplayed(boolean bool)
 	{
-		this.isDisplayed = true;
+		this.isDisplayed = bool;
 	}
 
 	public boolean isDisplayed()

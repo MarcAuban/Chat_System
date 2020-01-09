@@ -207,6 +207,7 @@ public class Application extends JFrame{
 			ArrayList<User> listUser = new ArrayList<>();
 			listUser.add(app.getUserFromPseudo(pseudo));
 			listUser.add(app.getUser());
+
 			return app.getUser().getSessionFromParticipants(listUser);
 		}
 

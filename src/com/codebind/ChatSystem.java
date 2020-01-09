@@ -143,6 +143,7 @@ public class ChatSystem implements Runnable{
 
 	protected User getUserFromPseudo(String pseudo){
 		for(User user : this.userList) {
+			System.out.println(user.getPseudo() + " " + pseudo);
 			if (user.getPseudo().equals(pseudo)) {
 				return user;
 			}
@@ -270,6 +271,9 @@ public class ChatSystem implements Runnable{
 			*/
 			//splitReceived[1] est le pseudo et splitReceived[2] est l'ip de l'utilisateur
 			this.changerPseudo(splitReceived[1], splitReceived[3]);
+			for(Session s : this.user.getSessionList()){
+				s.setDisplayed(false);
+			}
 		}
 
 		if(splitReceived[0].equals("deconnexion")){

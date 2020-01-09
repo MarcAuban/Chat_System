@@ -62,11 +62,12 @@ public class UpdateDisplay implements Runnable{
                     for (Session s : sessionList) {
                         for (User user : s.getParticipants()) {
                             if (user!=null && !user.getPseudo().equals(app.getUser().getPseudo())) {
+                                //ne séléctionne qu'un seul pseudo au lieu de plusieurs
                                 pseudo = user.getPseudo();
                             }
                         }
                         if(pseudo!=null && !s.isDisplayed()) {
-                            s.setDisplayed();
+                            s.setDisplayed(true);
                             model.addElement(pseudo);
                             listSession.setModel(model);
                             listSession.setSelectedIndex(listSession.getLastVisibleIndex());
