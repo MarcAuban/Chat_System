@@ -25,9 +25,9 @@ public class AProposBackground implements Runnable{
             if(angle>2* pi)
                 angle=0;
             angle+= pi /90;
-            int r = (int) (Math.sin(angle) * 255);
-            int g = (int) (Math.sin(angle + 2 * pi / 3) * 255);
-            int b = (int) (Math.sin(angle - 2 * pi / 3) * 255);
+            int r = (int) ((Math.sin(angle)+1)/2 * 255);
+            int g = (int) ((Math.sin(angle + 2 * pi / 3)+1)/2 * 255);
+            int b = (int) ((Math.sin(angle - 2 * pi / 3)+1)/2 * 255);
 
             int tr = 0, tg = 0, tb = 0;
             if (r > 0)
@@ -36,9 +36,6 @@ public class AProposBackground implements Runnable{
                 tg = g;
             if (b > 0)
                 tb = b;
-
-
-            //System.out.println(tr+";"+tg+";"+tb);
 
             panel.setBackground(new Color(tr, tg, tb));
             pane.setBackground(new Color(tr,tg,tb));
