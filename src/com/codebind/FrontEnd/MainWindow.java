@@ -88,6 +88,7 @@ public class MainWindow extends JFrame{
 		aPropos.addActionListener(e -> {
 			APropos frame = new APropos();
 			frame.setExtendedState(Frame.MAXIMIZED_BOTH);
+			frame.setUndecorated(true);
 			frame.setVisible(true);
 			frame.setLocationRelativeTo(null);
 		});
