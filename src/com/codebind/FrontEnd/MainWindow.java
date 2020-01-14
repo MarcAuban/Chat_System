@@ -30,6 +30,7 @@ public class MainWindow extends JFrame{
 	private ChatSystem app;
 	private Session s;
 	private UpdateDisplay updateDisplay;
+	private AProposBackground b=null;
 
 
 	public MainWindow(ChatSystem app, String name) {
@@ -39,7 +40,6 @@ public class MainWindow extends JFrame{
 		this.s = null;
 		Scroll.setViewportView(textPane);
 		Scroll.setWheelScrollingEnabled(true);
-
 		NameUser.setText("<html> Bienvenue "+ name + " <br> </html>");
 		Font font1 = new Font("SansSerif", Font.BOLD, 20);
 		NameUser.setFont(font1);
@@ -69,11 +69,19 @@ public class MainWindow extends JFrame{
 		textField1.setEditable(false);
 		setContentPane(panel1);
 
+		if(app.getUser().getPseudo().equals("RGB")){
+			b = new AProposBackground(panel1);
+			Thread AProposBackgroundThread = new Thread(b);
+			AProposBackgroundThread.start();
+		}
+
 		addWindowListener(new java.awt.event.WindowAdapter() { //Bouton X de la frame
 			@Override
 			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
 				if (JOptionPane.showConfirmDialog(panel1, "Are you sure you want to close this window?", "Close Window?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
 					deconnexionWithOut();
+					if(b != null)
+						b.stop();
 					System.exit(0);
 				}
 			}
@@ -102,6 +110,8 @@ public class MainWindow extends JFrame{
 
 		// Bouton Quitter du menu de la frame
 		refresh.addActionListener(e -> app.requestUserList());
+
+
 
 		list1.addMouseListener(new MouseAdapter() { // Click on the list1 pour les sessions
 			@Override
@@ -199,7 +209,6 @@ public class MainWindow extends JFrame{
 			scrollBar.setValue(scrollBar.getMaximum());
 		});
 	}
-
 
 	public boolean CheckIsUserConnected(String pseudo){
 		User checked = app.getUserFromPseudo(pseudo);

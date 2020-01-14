@@ -3,6 +3,8 @@ package com.codebind.FrontEnd;
 import com.codebind.Controleur.UpdateDisplay;
 
 import javax.swing.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class APropos extends JFrame{
     private JPanel panel;

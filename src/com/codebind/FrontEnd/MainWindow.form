@@ -49,6 +49,7 @@
               <editable value="false"/>
               <enabled value="true"/>
               <text value=""/>
+              <toolTipText value=""/>
             </properties>
           </component>
           <scrollpane id="7b256" binding="Scroll">

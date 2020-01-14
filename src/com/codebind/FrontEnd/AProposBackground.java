@@ -14,6 +14,11 @@ public class AProposBackground implements Runnable{
         this.pane = pane;
     }
 
+    AProposBackground(JPanel panel){
+        this.panel = panel;
+        this.pane = null;
+    }
+
     public void run(){
         while(on) {
             try {
@@ -38,8 +43,10 @@ public class AProposBackground implements Runnable{
                 tb = b;
 
             panel.setBackground(new Color(tr, tg, tb));
-            pane.setBackground(new Color(tr,tg,tb));
-            pane.setForeground(new Color(255-tr,255-tg,255-tb));
+            if(pane != null) {
+                pane.setBackground(new Color(tr, tg, tb));
+                pane.setForeground(new Color(255 - tr, 255 - tg, 255 - tb));
+            }
         }
     }
     public void stop(){
