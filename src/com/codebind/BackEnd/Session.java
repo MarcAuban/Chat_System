@@ -37,7 +37,6 @@ public class Session{
 	protected void receivedMsg(User sender, String txt){
 		Message m = new Message(sender, txt);
 		this.historique.add(m);
-		//à faire : update l'UI*/
 	}
 
 /**

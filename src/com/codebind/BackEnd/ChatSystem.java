@@ -143,7 +143,7 @@ public ChatSystem(Receiver receiver, BlockingQueue<String> queue){
 
 	public User getUserFromPseudo(String pseudo){
 		for(User user : this.userList) {
-			System.out.println(user.getPseudo() + " " + pseudo);
+			//System.out.println(user.getPseudo() + " " + pseudo);
 			if (user.getPseudo().equals(pseudo)) {
 				return user;
 			}
@@ -255,9 +255,13 @@ public ChatSystem(Receiver receiver, BlockingQueue<String> queue){
 			192.34.2.1"
 			*/
 			//splitReceived[1] est le pseudo et splitReceived[2] est l'ip de l'utilisateur
+			System.out.println("\nconnexion");
+			this.printUserList();
 			User connectedUser = getUserFromPseudo(splitReceived[1], splitReceived[2]);
-			if(connectedUser==null)
+			if(connectedUser==null) {
+				System.out.println("nouveau user");
 				this.addConnectedUser(new User(splitReceived[1], splitReceived[2]));
+			}
 			else//on l'a déjà enregistré
 				connectedUser.setOnline(true);
 		}
@@ -307,6 +311,7 @@ public ChatSystem(Receiver receiver, BlockingQueue<String> queue){
 			}
 			Session session = this.user.getSessionFromParticipants(participants);
 			if(session == null){
+				System.out.println("nouvelle session");
 				session = this.user.newSession(participants);
 			}
 			session.receivedMsg(sender, received.substring(received.indexOf("end")+4));
