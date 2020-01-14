@@ -148,7 +148,7 @@ public class MainWindow extends JFrame{
 				updateDisplay.ChangeIndex();
 				CurrentSession.setText(list1.getSelectedValue());
 				textField1.setEditable(true);
-				System.out.println("Component added");
+				//System.out.println("Component added");
 			}
 		});
 

@@ -40,6 +40,11 @@ public class User{
 	}
 
 	public ArrayList<Session> getSessionList(){
+		for(Session s : this.sessionList){
+			for(User u : s.getParticipants()){
+				System.out.println(u.toString());
+			}
+		}
 		return this.sessionList;
 	}
 

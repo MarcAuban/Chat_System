@@ -79,7 +79,7 @@ public class Savefile {
 				//recuperer l'historique que si y'a déjà un savefile qui existe
 				if (line.hasNext()) {
 					int nbSessions = Integer.parseInt(line.next());
-					System.out.println("nbsession : " + nbSessions);
+					//System.out.println("nbsession : " + nbSessions);
 					for (int i = 0; i < nbSessions; i++) {
 
 						ArrayList<User> participants = new ArrayList<>();

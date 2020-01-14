@@ -106,7 +106,7 @@ public class UpdateDisplay implements Runnable{
     public void initialisation(){
         if(model.size()>0){
             listSession.setSelectedIndex(listSession.getLastVisibleIndex()+1);
-            System.out.println(model.toString());
+            //System.out.println(model.toString());
             init = true;
         }
     }
