@@ -1,17 +1,17 @@
 # Chat_System
 A local messaging app
 
-##Getting started
+## Getting started
 The instruction will help you run the app on your system
 
-###Prerequisites
+### Prerequisites
 You must have a jdk installed on your system, ver.11 or newer
 
-###Installing
+### Installing
 Download the jar file located in out/artifacts
 Just run it anywhere!
 
-##Usage
+## Usage
 You can only have a single instance of the app running on a computer at once
 Other users are discovered if they are on the same local network
 You can start chatting with the button : "Créér une conversation", select a user then click "ok"
