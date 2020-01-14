@@ -11,6 +11,17 @@ You must have a jdk installed on your system, ver.11 or newer
 Download the jar file located in out/artifacts
 Just run it anywhere!
 
+## Running the app
+
+### Windows
+Just double-click on the jar
+
+### Ubuntu
+Open a new terminal in the jar's directory and type
+```
+java -jar Chat_System.jar
+```
+
 ## Usage
 You can only have a single instance of the app running on a computer at once
 Other users are discovered if they are on the same local network
