@@ -27,6 +27,8 @@ You can only have a single instance of the app running on a computer at once
 
 Other users are discovered if they are on the same local network
 
+If you have trouble finding other users, you may hit the "Rafraichir" button under "Options"
+
 You can start chatting with the button : "Créér une conversation", select a user then click "ok"
 
 Your existing conversations are displayed on the left, you can select them, the history will be displayed int the middle
