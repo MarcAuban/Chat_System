@@ -1,5 +1,10 @@
-package com.codebind;
+package com.codebind.FrontEnd;
 
+
+import com.codebind.BackEnd.ChatSystem;
+import com.codebind.BackEnd.Session;
+import com.codebind.BackEnd.User;
+import com.codebind.Controleur.UpdateDisplay;
 
 import javax.swing.*;
 import java.awt.*;
@@ -88,7 +93,7 @@ public class Application extends JFrame{
 		});
 
 		// Bouton Quitter du menu de la frame
-		refresh.addActionListener(e -> getUserList());
+		refresh.addActionListener(e -> app.requestUserList());
 
 		list1.addMouseListener(new MouseAdapter() { // Click on the list1 pour les sessions
 			@Override
@@ -194,10 +199,6 @@ public class Application extends JFrame{
 			return false;
 		}
 		return checked.isOnline();
-	}
-
-	public void getUserList(){
-		app.requestUserList();
 	}
 
 	public Session SelectedSession()

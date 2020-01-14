@@ -1,4 +1,4 @@
-package com.codebind;
+package com.codebind.BackEnd;
 
 import java.util.Date;
 import java.text.SimpleDateFormat;
@@ -36,15 +36,15 @@ public class Message{
 		this.dateformat = new SimpleDateFormat("HH:mm");
 	}
 
-	protected String getMessage(){
+	public String getMessage(){
 		return this.txt;
 	}
 
-	protected User getSender(){
+	public User getSender(){
 		return this.sender;
 	}
 
-	protected Date getDate(){
+	public Date getDate(){
 		return this.date;
 	}
 
