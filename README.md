@@ -24,9 +24,13 @@ java -jar Chat_System.jar
 
 ## Usage
 You can only have a single instance of the app running on a computer at once
+
 Other users are discovered if they are on the same local network
+
 You can start chatting with the button : "Créér une conversation", select a user then click "ok"
+
 Your existing conversations are displayed on the left, you can select them, the history will be displayed int the middle
+
 You can type out your messages on the bottom field, send them with enter
 
 When you close the window, the history will be saved in a folder : "savefiles"
