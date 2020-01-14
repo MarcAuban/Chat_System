@@ -171,7 +171,7 @@ public class MainWindow extends JFrame{
 		});
 
 		DefaultListModel<String> modelUserConnected = new DefaultListModel<>();
-		updateDisplay = new UpdateDisplay(this,app,Scroll,textPane,textField1,list1,model, CurrentSession, modelUserConnected,listUserConnected);
+		updateDisplay = new UpdateDisplay(app,Scroll,textPane,textField1,list1,model, CurrentSession, modelUserConnected,listUserConnected);
 		Thread updatehistoryThread = new Thread(updateDisplay);
 		updatehistoryThread.start();
 
@@ -277,10 +277,6 @@ public class MainWindow extends JFrame{
 		list1.setModel(model);
 
 		CurrentSession.setText("");
-		textPane.setText("");
-	}
-
-	public void wipeHistory(){
 		textPane.setText("");
 	}
 }

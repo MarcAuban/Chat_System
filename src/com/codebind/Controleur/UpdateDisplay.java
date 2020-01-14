@@ -4,7 +4,6 @@ import com.codebind.BackEnd.ChatSystem;
 import com.codebind.BackEnd.Message;
 import com.codebind.BackEnd.Session;
 import com.codebind.BackEnd.User;
-import com.codebind.FrontEnd.MainWindow;
 
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
@@ -36,7 +35,7 @@ public class UpdateDisplay implements Runnable{
     private JScrollPane Scroll;
     private StyledDocument doc;
 
-    public UpdateDisplay(MainWindow MainWindow, ChatSystem app, JScrollPane Scroll, JTextPane textPane, JTextField textField, JList<String> listSession, DefaultListModel<String> model, JLabel CurrentSession, DefaultListModel<String> modelUserconnected, JList<String> listUserConnected){
+    public UpdateDisplay(ChatSystem app, JScrollPane Scroll, JTextPane textPane, JTextField textField, JList<String> listSession, DefaultListModel<String> model, JLabel CurrentSession, DefaultListModel<String> modelUserconnected, JList<String> listUserConnected){
         this.textPane = textPane;
         this.textField = textField;
         this.doc = textPane.getStyledDocument();
