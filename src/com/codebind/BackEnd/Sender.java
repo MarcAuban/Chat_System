@@ -1,4 +1,6 @@
-package com.codebind;
+package com.codebind.BackEnd;
+
+import com.codebind.BackEnd.ChatSystem;
 
 import java.io.IOException;
 import java.net.DatagramPacket;

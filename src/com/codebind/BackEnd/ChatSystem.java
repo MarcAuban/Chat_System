@@ -1,4 +1,4 @@
-package com.codebind;
+package com.codebind.BackEnd;
 
 import java.net.*;
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ public class ChatSystem implements Runnable{
 	* @param receiver une instance de receiverThread initialisée avec une SynchronousQueue
 	* @param queue la même instance de queue que celle fournie à ReceiverThread
 	*/
-	ChatSystem(Receiver receiver, BlockingQueue<String> queue){
+public ChatSystem(Receiver receiver, BlockingQueue<String> queue){
 		this.queue=queue;
 		getIP();
 		this.receiver=receiver;
@@ -60,7 +60,7 @@ public class ChatSystem implements Runnable{
 /**
 	* à utiliser après login
 	*/
-	protected void deconnexion(){
+	public void deconnexion(){
 		this.online = false;
 		receiver.deconnexion();
 		if(!(this.user == null)){
@@ -75,7 +75,7 @@ public class ChatSystem implements Runnable{
 	* à faire avant tout
 	* @param pseudo le pseudo de l'utilisateur
 	*/
-	protected void login(String pseudo){
+	public void login(String pseudo){
 
 		//test si le pseudo est déjà utilisé sur le reseau
 		if(!isUnique(pseudo)){
@@ -122,14 +122,14 @@ public class ChatSystem implements Runnable{
 /**
 	* @return l'utilisateur si il s'est login, null sinon
 	*/
-	protected User getUser(){
+	public User getUser(){
 		return this.user;
 	}
 
 	/**
 	 * @return la liste des utilisateurs connectés
 	 */
-	protected ArrayList<User> getUsersConnected(){
+	public ArrayList<User> getUsersConnected(){
 		ArrayList<User> usersConnected = new ArrayList<>();
 		for(User user : this.userList)
 			if(user.isOnline())
@@ -137,11 +137,11 @@ public class ChatSystem implements Runnable{
 		return usersConnected;
 	}
 
-	protected void requestUserList(){
+	public void requestUserList(){
 		Sender.broadcast("getUserList\n" + myIP);
 	}
 
-	protected User getUserFromPseudo(String pseudo){
+	public User getUserFromPseudo(String pseudo){
 		for(User user : this.userList) {
 			System.out.println(user.getPseudo() + " " + pseudo);
 			if (user.getPseudo().equals(pseudo)) {
@@ -151,7 +151,7 @@ public class ChatSystem implements Runnable{
 		return null;
 	}
 
-	protected User getUserFromPseudo(String pseudo, String ip){
+	public User getUserFromPseudo(String pseudo, String ip){
 		for(User user : this.userList) {
 			if (user.getPseudo().equals(pseudo) && user.getIP().equals(ip)) {
 				return user;
@@ -163,7 +163,7 @@ public class ChatSystem implements Runnable{
 /**
 	* @param newPseudo le nouveau pseudo de l'utilisateur
 	*/
-	protected boolean changerPseudo(String newPseudo){
+	public boolean changerPseudo(String newPseudo){
 		boolean unicite = isUnique(newPseudo);
 		if(unicite){
 			Sender.broadcast("changerPseudo\n" + this.user.toString() + "\n" + newPseudo);

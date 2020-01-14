@@ -1,11 +1,14 @@
-package com.codebind;
+package com.codebind.BackEnd;
 
 //queue
-import java.net.*;
-import java.util.concurrent.*;
-//network
 
 import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.SocketException;
+import java.util.concurrent.BlockingQueue;
+
+//network
 
 /**
  * C'est le thread qui recoit les messages,
@@ -21,7 +24,7 @@ public class Receiver implements Runnable{
 	/**
 	 * @param queue la même instance de queue que celle fournie à ChatSystem
 	 */
-	Receiver(BlockingQueue<String> queue){
+	public Receiver(BlockingQueue<String> queue){
 		this.queue=queue;
 		try{
 			this.socket = new DatagramSocket(6969);

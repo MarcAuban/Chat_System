@@ -1,4 +1,4 @@
-package com.codebind;
+package com.codebind.BackEnd;
 
 import java.util.ArrayList;
 
@@ -27,7 +27,7 @@ public class User{
 		return this.pseudo + "\n" + this.ip;
 	}
 
-	protected String getPseudo(){
+	public String getPseudo(){
 		return this.pseudo;
 	}
 
@@ -39,7 +39,7 @@ public class User{
 		return this.ip;
 	}
 
-	protected ArrayList<Session> getSessionList(){
+	public ArrayList<Session> getSessionList(){
 		return this.sessionList;
 	}
 
@@ -47,7 +47,7 @@ public class User{
 	* @param participants une liste d'utilisateurs
 	* @return la session qui regroupe ces participants ou une nouvelle session si elle n'existe pas
 	*/
-	protected Session getSessionFromParticipants(ArrayList<User> participants){
+	public Session getSessionFromParticipants(ArrayList<User> participants){
 		for(Session session : this.sessionList){
 			if(participants.containsAll(session.getParticipants()))
 				return session;
@@ -59,21 +59,21 @@ public class User{
 	* @param session la session à supprimer
 	* supprime la session unilatéralement
 	*/
-	protected void delSession(Session session){
+	public void delSession(Session session){
 		this.sessionList.remove(session);
 	}
 
-	protected Session newSession(ArrayList<User> participants){
+	public Session newSession(ArrayList<User> participants){
 		Session session = new Session(participants);
 		this.sessionList.add(session);
 		return session;
 	}
 
-	protected boolean isOnline(){
+	public boolean isOnline(){
 		return this.isOnline;
 	}
 
-	protected void setOnline(boolean online){
+	public void setOnline(boolean online){
 		this.isOnline=online;
 	}
 }
