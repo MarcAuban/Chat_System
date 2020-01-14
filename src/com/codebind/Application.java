@@ -189,7 +189,11 @@ public class Application extends JFrame{
 
 
 	public boolean CheckIsUserConnected(String pseudo){
-		return app.getUserFromPseudo(pseudo).isOnline();
+		User checked = app.getUserFromPseudo(pseudo);
+		if (checked == null) {
+			return false;
+		}
+		return checked.isOnline();
 	}
 
 	public void getUserList(){
