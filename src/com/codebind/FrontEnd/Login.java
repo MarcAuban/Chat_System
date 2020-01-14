@@ -60,7 +60,7 @@ public class Login extends JFrame{
 
 	private void login(){
 		app.login(textField1.getText());
-		Application frame = new Application(app,textField1.getText());
+		MainWindow frame = new MainWindow(app,textField1.getText());
 		frame.setSize(900,600);
 		frame.setVisible(true);
 		frame.setLocationRelativeTo(null);

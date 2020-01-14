@@ -12,7 +12,7 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 
-public class Application extends JFrame{
+public class MainWindow extends JFrame{
 	private JPanel panel1;
 	private ChangerPseudo NewPseudo;
 	private JList<String> list1;
@@ -32,7 +32,7 @@ public class Application extends JFrame{
 	private UpdateDisplay updateDisplay;
 
 
-	public Application(ChatSystem app,String name) {
+	public MainWindow(ChatSystem app, String name) {
 
 		super("ChatSystem");
 		this.app = app;
@@ -83,6 +83,13 @@ public class Application extends JFrame{
 		deco.addActionListener(e -> {
 			deconnexion();
 			dispose();
+		});
+
+		aPropos.addActionListener(e -> {
+			APropos frame = new APropos();
+			frame.setExtendedState(Frame.MAXIMIZED_BOTH);
+			frame.setVisible(true);
+			frame.setLocationRelativeTo(null);
 		});
 
 		// Bouton Quitter du menu de la frame
@@ -153,7 +160,7 @@ public class Application extends JFrame{
 		});
 
 		DefaultListModel<String> modelUserConnected = new DefaultListModel<>();
-		updateDisplay = new UpdateDisplay(app,Scroll,textPane,textField1,list1,model, CurrentSession, modelUserConnected,listUserConnected);
+		updateDisplay = new UpdateDisplay(this,app,Scroll,textPane,textField1,list1,model, CurrentSession, modelUserConnected,listUserConnected);
 		Thread updatehistoryThread = new Thread(updateDisplay);
 		updatehistoryThread.start();
 
@@ -260,6 +267,10 @@ public class Application extends JFrame{
 		list1.setModel(model);
 
 		CurrentSession.setText("");
+		textPane.setText("");
+	}
+
+	public void wipeHistory(){
 		textPane.setText("");
 	}
 }
