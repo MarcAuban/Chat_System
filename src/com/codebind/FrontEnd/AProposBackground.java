@@ -6,8 +6,7 @@ import java.awt.*;
 public class AProposBackground implements Runnable{
     private JPanel panel;
     private JTextPane pane;
-    private int r=0, g=220, b=-220;
-    private int rm=4, gm=4, bm=-4;
+    private double angle=0;
     private boolean on=true;
 
     AProposBackground(JPanel panel, JTextPane pane){
@@ -22,17 +21,13 @@ public class AProposBackground implements Runnable{
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
-            if (r >= 250 || r <=-250)
-            rm = -rm;
-            if (g >= 250 || g<=-250)
-            gm = -gm;
-            if (b >= 250 || b<=-250)
-            bm = -bm;
-
-            r = r + rm;
-            g = g + gm;
-            b = b + bm;
+            double pi = Math.PI;
+            if(angle>2* pi)
+                angle=0;
+            angle+= pi /90;
+            int r = (int) (Math.sin(angle) * 255);
+            int g = (int) (Math.sin(angle + 2 * pi / 3) * 255);
+            int b = (int) (Math.sin(angle - 2 * pi / 3) * 255);
 
             int tr = 0, tg = 0, tb = 0;
             if (r > 0)
@@ -41,6 +36,9 @@ public class AProposBackground implements Runnable{
                 tg = g;
             if (b > 0)
                 tb = b;
+
+
+            //System.out.println(tr+";"+tg+";"+tb);
 
             panel.setBackground(new Color(tr, tg, tb));
             pane.setBackground(new Color(tr,tg,tb));
