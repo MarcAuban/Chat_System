@@ -1,4 +1,7 @@
-package com.codebind;
+package com.codebind.FrontEnd;
+
+import com.codebind.BackEnd.ChatSystem;
+import com.codebind.BackEnd.User;
 
 import javax.swing.*;
 import java.util.ArrayList;

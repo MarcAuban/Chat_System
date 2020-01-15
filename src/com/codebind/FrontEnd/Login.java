@@ -1,4 +1,7 @@
-package com.codebind;
+package com.codebind.FrontEnd;
+import com.codebind.BackEnd.ChatSystem;
+import com.codebind.BackEnd.Receiver;
+
 import javax.swing.*;
 import javax.swing.JPanel;
 import java.awt.event.KeyAdapter;
@@ -57,7 +60,7 @@ public class Login extends JFrame{
 
 	private void login(){
 		app.login(textField1.getText());
-		Application frame = new Application(app,textField1.getText());
+		MainWindow frame = new MainWindow(app,textField1.getText());
 		frame.setSize(900,600);
 		frame.setVisible(true);
 		frame.setLocationRelativeTo(null);
