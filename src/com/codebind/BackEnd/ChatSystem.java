@@ -68,6 +68,7 @@ public ChatSystem(Receiver receiver, BlockingQueue<String> queue){
 			Savefile.save(this.user, this.userList);
 		}
 		Sender.send("127.0.0.1", "débloque le receive");
+		this.user=null;
 	}
 
 /**
@@ -122,7 +123,7 @@ public ChatSystem(Receiver receiver, BlockingQueue<String> queue){
 	public ArrayList<User> getUsersConnected(){
 		ArrayList<User> usersConnected = new ArrayList<>();
 		for(User user : this.userList)
-			if(user.isOnline())
+			if (user.isOnline())
 				usersConnected.add(user);
 		return usersConnected;
 	}
