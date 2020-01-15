@@ -1,4 +1,6 @@
-package com.codebind;
+package com.codebind.FrontEnd;
+
+import com.codebind.BackEnd.ChatSystem;
 
 import javax.swing.*;
 import java.awt.event.KeyAdapter;

@@ -1,16 +1,18 @@
-package com.codebind;
+package com.codebind.FrontEnd;
 
+
+import com.codebind.BackEnd.ChatSystem;
+import com.codebind.BackEnd.Session;
+import com.codebind.BackEnd.User;
+import com.codebind.Controleur.UpdateDisplay;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 
 
-public class Application extends JFrame{
+public class MainWindow extends JFrame{
 	private JPanel panel1;
 	private ChangerPseudo NewPseudo;
 	private JList<String> list1;
@@ -28,16 +30,16 @@ public class Application extends JFrame{
 	private ChatSystem app;
 	private Session s;
 	private UpdateDisplay updateDisplay;
+	private AProposBackground b=null;
 
 
-	public Application(ChatSystem app,String name) {
+	public MainWindow(ChatSystem app, String name) {
 
 		super("ChatSystem");
 		this.app = app;
 		this.s = null;
 		Scroll.setViewportView(textPane);
 		Scroll.setWheelScrollingEnabled(true);
-
 		NameUser.setText("<html> Bienvenue "+ name + " <br> </html>");
 		Font font1 = new Font("SansSerif", Font.BOLD, 20);
 		NameUser.setFont(font1);
@@ -64,14 +66,22 @@ public class Application extends JFrame{
 		listUserConnected.setOpaque(false);
 		UtilisateurConnected.setText("Utilisateurs connectés : ");
 
-		textField1.setEditable(true);
+		textField1.setEditable(false);
 		setContentPane(panel1);
+
+		if(app.getUser().getPseudo().equals("RGB")){
+			b = new AProposBackground(panel1);
+			Thread AProposBackgroundThread = new Thread(b);
+			AProposBackgroundThread.start();
+		}
 
 		addWindowListener(new java.awt.event.WindowAdapter() { //Bouton X de la frame
 			@Override
 			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
 				if (JOptionPane.showConfirmDialog(panel1, "Are you sure you want to close this window?", "Close Window?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
 					deconnexionWithOut();
+					if(b != null)
+						b.stop();
 					System.exit(0);
 				}
 			}
@@ -83,6 +93,14 @@ public class Application extends JFrame{
 			dispose();
 		});
 
+		aPropos.addActionListener(e -> {
+			APropos frame = new APropos();
+			frame.setExtendedState(Frame.MAXIMIZED_BOTH);
+			frame.setUndecorated(true);
+			frame.setVisible(true);
+			frame.setLocationRelativeTo(null);
+		});
+
 		// Bouton Quitter du menu de la frame
 		quitter.addActionListener(e -> {
 			deconnexionWithOut();
@@ -91,7 +109,9 @@ public class Application extends JFrame{
 		});
 
 		// Bouton Quitter du menu de la frame
-		refresh.addActionListener(e -> getUserList());
+		refresh.addActionListener(e -> app.requestUserList());
+
+
 
 		list1.addMouseListener(new MouseAdapter() { // Click on the list1 pour les sessions
 			@Override
@@ -101,12 +121,10 @@ public class Application extends JFrame{
 					String pseudo = list1.getSelectedValue();
 					if(!list1.isSelectionEmpty()) {
 						if(!CheckIsUserConnected(pseudo)){
-							textField1.setEditable(false);
-							//s = SelectedSession();
 							CurrentSession.setText(list1.getSelectedValue());
-							//updateDisplay.ChangeSession(s);
-							//updateDisplay.showHistory(s);
 							JOptionPane.showMessageDialog(null, "Utilisateur pas connecté", "Erreur", JOptionPane.ERROR_MESSAGE);
+							textField1.setEditable(false);
+							updateDisplay.ChangeSession(null);
 						}
 						else {
 							if(s!=null) {
@@ -130,7 +148,7 @@ public class Application extends JFrame{
 				updateDisplay.ChangeIndex();
 				CurrentSession.setText(list1.getSelectedValue());
 				textField1.setEditable(true);
-				System.out.println("Component added");
+				//System.out.println("Component added");
 			}
 		});
 
@@ -139,9 +157,14 @@ public class Application extends JFrame{
 			public void keyPressed(KeyEvent e) {
 				super.keyPressed(e);
 				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-					if(!textField1.getText().equals(" ")) {
+					if(!textField1.getText().equals(" ") && CheckIsUserConnected(list1.getSelectedValue())) {
 						SendMessage(textField1.getText());
 						textField1.setText("");
+					}else{
+						textField1.setEditable(false);
+						textField1.setText("");
+						JOptionPane.showMessageDialog(null, "Utilisateur pas connecté", "Erreur", JOptionPane.ERROR_MESSAGE);
+						updateDisplay.ChangeSession(null);
 					}
 				}
 			}
@@ -187,13 +210,12 @@ public class Application extends JFrame{
 		});
 	}
 
-
 	public boolean CheckIsUserConnected(String pseudo){
-		return app.getUserFromPseudo(pseudo).isOnline();
-	}
-
-	public void getUserList(){
-		app.requestUserList();
+		User checked = app.getUserFromPseudo(pseudo);
+		if (checked == null) {
+			return false;
+		}
+		return checked.isOnline();
 	}
 
 	public Session SelectedSession()
