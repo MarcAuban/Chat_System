@@ -40,11 +40,13 @@ public class User{
 	}
 
 	public ArrayList<Session> getSessionList(){
+		/*
 		for(Session s : this.sessionList){
 			for(User u : s.getParticipants()){
 				System.out.println(u.toString());
 			}
 		}
+		*/
 		return this.sessionList;
 	}
 
@@ -54,12 +56,14 @@ public class User{
 	*/
 	public Session getSessionFromParticipants(ArrayList<User> participants){
 		for(Session session : this.sessionList){
+			/*
 			for (User u : session.getParticipants())
 				System.out.println(u.hashCode());
 			for (User u : participants)
 				System.out.println(u.hashCode());
 			System.out.println("participants session : " + session.getParticipants());
 			System.out.println("liste de marc : "+ participants);
+			*/
 			if(participants.containsAll(session.getParticipants()))
 				return session;
 		}

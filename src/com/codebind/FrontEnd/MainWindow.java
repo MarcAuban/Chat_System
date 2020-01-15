@@ -47,12 +47,12 @@ public class MainWindow extends JFrame{
 
 		JMenuBar menuBar = new JMenuBar();
 		JMenu menu1 = new JMenu("Options");
+		JMenuItem refresh = new JMenuItem("Rafraichir");
+		menu1.add(refresh);
 		JMenuItem changerpseudo = new JMenuItem("Changer Pseudo");
 		menu1.add(changerpseudo);
 		JMenuItem deco = new JMenuItem("Déconnexion");
 		menu1.add(deco);
-		JMenuItem refresh = new JMenuItem("Rafraichir");
-		menu1.add(refresh);
 		JMenuItem quitter = new JMenuItem("Quitter");
 		menu1.add(quitter);
 		menuBar.add(menu1);

@@ -53,7 +53,7 @@ public class ChangerPseudo extends JFrame{
         cancelButton.addActionListener(e -> dispose());
     }
     public void changerPseudo(String newpseudo){
-        System.out.println("Newpseudo : " +newpseudo);
+        //System.out.println("Newpseudo : " +newpseudo);
         if(!app.changerPseudo(newpseudo))
         { JOptionPane.showMessageDialog(
                         null, "Pseudo déjà pris", "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -64,6 +64,6 @@ public class ChangerPseudo extends JFrame{
         String name = textField.getText();
         changerPseudo(name);
         NameUser.setText("<html> Bienvenue "+ app.getUser().getPseudo() + " <br> </html>");
-        System.out.println(app.getUser().getPseudo());
+        //System.out.println(app.getUser().getPseudo());
     }
 }

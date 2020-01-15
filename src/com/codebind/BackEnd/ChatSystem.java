@@ -65,7 +65,7 @@ public ChatSystem(Receiver receiver, BlockingQueue<String> queue){
 		receiver.deconnexion();
 		if(!(this.user == null)){
 			Sender.broadcast("deconnexion\n" + this.user.toString());
-			Savefile.save(this.user);
+			Savefile.save(this.user, this.userList);
 		}
 		Sender.send("127.0.0.1", "débloque le receive");
 	}
@@ -76,17 +76,7 @@ public ChatSystem(Receiver receiver, BlockingQueue<String> queue){
 	* @param pseudo le pseudo de l'utilisateur
 	*/
 	public void login(String pseudo){
-
-		//test si le pseudo est déjà utilisé sur le reseau
-		if(!isUnique(pseudo)){
-			//UI Stuff
-			System.out.println("pseudo déjà pris");
-		}
-		else{
-
-			//a faire : charger l'user et son historique si il existe dejà
-
-			//création d'un nouveau user
+		if(isUnique(pseudo)){
 			this.user = new User(pseudo, myIP);
 			this.addConnectedUser(this.user);
 			Savefile.getUserFromSave(this.user, this.userList);
@@ -110,7 +100,7 @@ public ChatSystem(Receiver receiver, BlockingQueue<String> queue){
 					InetAddress broadcast = address.getBroadcast();
 					if(broadcast!=null)
 						broadcastIP = broadcast.getHostAddress();
-					System.out.println(broadcastIP);
+					//System.out.println(broadcastIP);
 				}
 			}
 		}
@@ -169,9 +159,6 @@ public ChatSystem(Receiver receiver, BlockingQueue<String> queue){
 			Sender.broadcast("changerPseudo\n" + this.user.toString() + "\n" + newPseudo);
 			this.user.setPseudo(newPseudo);
 		}
-		else{
-			System.out.println("impossible de changer de pseudo");
-		}
 		return unicite;
 	}
 
@@ -188,7 +175,7 @@ public ChatSystem(Receiver receiver, BlockingQueue<String> queue){
 		boolean unicite=true;
 
 		for(User user : userList){
-			System.out.println("unicité :" + pseudo + " " + user.getPseudo());
+			//System.out.println("unicité :" + pseudo + " " + user.getPseudo());
 			if (pseudo.equals(user.getPseudo())) {
 				//unicité pas valide
 				unicite = false;
@@ -209,14 +196,10 @@ public ChatSystem(Receiver receiver, BlockingQueue<String> queue){
 	}
 
 	private void printUserList(){
-		System.out.println("\nusers connectés :");
-		System.out.flush();
+		System.out.println("\nuserList :");
 		for(User user : this.userList){
-			System.out.println(user.toString());
-			System.out.flush();
+			System.out.println(user.toString() + "\nconnecté : " + user.isOnline());
 		}
-		System.out.println();
-		System.out.flush();
 	}
 
 	/*--------------------
@@ -255,11 +238,11 @@ public ChatSystem(Receiver receiver, BlockingQueue<String> queue){
 			192.34.2.1"
 			*/
 			//splitReceived[1] est le pseudo et splitReceived[2] est l'ip de l'utilisateur
-			System.out.println("\nconnexion");
-			this.printUserList();
+			//System.out.println("\nconnexion");
+			//this.printUserList();
 			User connectedUser = getUserFromPseudo(splitReceived[1], splitReceived[2]);
 			if(connectedUser==null) {
-				System.out.println("nouveau user");
+				//System.out.println("nouveau user");
 				this.addConnectedUser(new User(splitReceived[1], splitReceived[2]));
 			}
 			else//on l'a déjà enregistré
@@ -311,7 +294,7 @@ public ChatSystem(Receiver receiver, BlockingQueue<String> queue){
 			}
 			Session session = this.user.getSessionFromParticipants(participants);
 			if(session == null){
-				System.out.println("nouvelle session");
+				//System.out.println("nouvelle session");
 				session = this.user.newSession(participants);
 			}
 			session.receivedMsg(sender, received.substring(received.indexOf("end")+4));
