@@ -78,7 +78,7 @@ public class MainWindow extends JFrame{
 		addWindowListener(new java.awt.event.WindowAdapter() { //Bouton X de la frame
 			@Override
 			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-				if (JOptionPane.showConfirmDialog(panel1, "Are you sure you want to close this window?", "Close Window?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+				if (JOptionPane.showConfirmDialog(panel1, "Etes vous sur de vouloir fermer l'application ?", "Fermeture de l'application ?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
 					deconnexionWithOut();
 					if(b != null)
 						b.stop();
@@ -194,7 +194,14 @@ public class MainWindow extends JFrame{
 		});
 
 		// Bouton Delete une session de la frame
-		deleteUneSessionButton.addActionListener(e -> DeleteSession());
+		deleteUneSessionButton.addActionListener(e -> {
+			if(model.size()!=0) {
+				DeleteSession();
+			}
+			else{
+				JOptionPane.showMessageDialog(null, "Veuillez sélectionner une session à supprimer", "Erreur Supprimer Session", JOptionPane.ERROR_MESSAGE);
+			}
+		});
 
 		NewPseudo =  new ChangerPseudo(app,NameUser);
 

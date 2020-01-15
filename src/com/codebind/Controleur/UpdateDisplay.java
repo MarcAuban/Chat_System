@@ -62,7 +62,7 @@ public class UpdateDisplay implements Runnable{
                 }
 
                 listUserConnected.setModel(modelUserConnected);
-                System.out.println(sessionList);
+
                 if(sessionList.size()>0) {
                     for (Session s : sessionList) {
                         if (!s.isDisplayed()){
@@ -82,7 +82,6 @@ public class UpdateDisplay implements Runnable{
                                 for(User user : app.getUsersConnected()) {
                                     pseudo = user.getPseudo();
                                     test.add(pseudo);
-                                    System.out.println(pseudo);
                                 }
                                 if(model.size()>0){
                                     for(int i=0; i < model.size() ; i++){

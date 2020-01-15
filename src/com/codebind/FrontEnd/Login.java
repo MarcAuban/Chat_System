@@ -59,12 +59,17 @@ public class Login extends JFrame{
 	}
 
 	private void login(){
-		app.login(textField1.getText());
-		MainWindow frame = new MainWindow(app,textField1.getText());
-		frame.setSize(900,600);
-		frame.setVisible(true);
-		frame.setLocationRelativeTo(null);
-		dispose();
+		if(!app.getUsersConnected().contains(app.getUserFromPseudo(textField1.getText()))) {
+			app.login(textField1.getText());
+			MainWindow frame = new MainWindow(app, textField1.getText());
+			frame.setSize(900, 600);
+			frame.setVisible(true);
+			frame.setLocationRelativeTo(null);
+			dispose();
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "Pseudo déjà pris", "Erreur pseudo pris", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	public void deconnexion(){

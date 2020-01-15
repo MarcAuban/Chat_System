@@ -64,6 +64,7 @@
               <component id="da744" class="javax.swing.JTextPane" binding="textPane">
                 <constraints/>
                 <properties>
+                  <editable value="false"/>
                   <font size="14" style="0"/>
                 </properties>
               </component>
