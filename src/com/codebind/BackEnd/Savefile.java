@@ -79,9 +79,11 @@ public class Savefile {
 		// "_" pour gitignore
 		Path path = Paths.get("savefiles","_" + user.getPseudo());
 
+		/*
 		System.out.println("\nSavefile avant");
 		for(User u : userList)
 			System.out.println(u.toString());
+		*/
 
 		try {
 
@@ -146,9 +148,11 @@ public class Savefile {
 				}
 			}
 
+			/*
 			System.out.println("\nSavefile après");
 			for(User u : userList)
 				System.out.println(u.toString());
+			*/
 		}
 		catch (IOException | ParseException e) {
 			e.printStackTrace();
