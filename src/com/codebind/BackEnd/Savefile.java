@@ -22,37 +22,46 @@ public class Savefile {
 	 * sauvegarde l'historique dans le fichier _pseudo
 	 * @param user l'utilisateur qui est en train de se déconnecter
 	 */
-	protected static void save(User user){
+	protected static void save(User user, ArrayList<User> userList){
 		// "_" pour gitignore
 		Path path = Paths.get("savefiles","_" + user.getPseudo());
 		Path directory = Paths.get("savefiles");
 		try {
-			//créér le dossier si il existe pas
+
+			//créé le dossier si il existe pas
 			File savefiles = new File(directory.toString());
 			if(!savefiles.exists()){
 				if(!savefiles.mkdir()){
 					throw new IOException();
 				}
 			}
-			//si le savefile existe
+
+			//supprime l'ancienne save
 			if(new File(path.toString()).exists()) {
 				Files.delete(path);
 			}
+
 			//créé le fichier
-			//nb sessions
-			Files.write(path, (user.getSessionList().size() + "\n").getBytes(), StandardOpenOption.CREATE);
+
+			//USERLIST
+			Files.write(path, (userList.size() + "\n").getBytes(), StandardOpenOption.CREATE);
+			for(User u : userList) {
+				Files.write(path, (u.toString() + "\n").getBytes(), StandardOpenOption.APPEND);
+			}
+
+			//SESSIONS
+			Files.write(path, (user.getSessionList().size() + "\n").getBytes(), StandardOpenOption.APPEND);
 			for (Session s : user.getSessionList()) {
-				//nb participants
+
+				//PARTICIPANTS
 				Files.write(path, (s.getParticipants().size() + "\n").getBytes(), StandardOpenOption.APPEND);
 				for (User participant : s.getParticipants()) {
-					//participants
 					Files.write(path, (participant.toString() + "\n").getBytes(), StandardOpenOption.APPEND);
 				}
-				//nb messages
+
+				//MESSAGES
 				Files.write(path, (s.getHistorique().size() + "\n").getBytes(), StandardOpenOption.APPEND);
 				for (Message m : s.getHistorique()) {
-					//message
-					//m.getSender() + "\n" + m.getMessage() + "\n" + m.getDate() + "\n"
 					Files.write(path, (m.toString()).getBytes(), StandardOpenOption.APPEND);
 				}
 			}
@@ -70,7 +79,12 @@ public class Savefile {
 		// "_" pour gitignore
 		Path path = Paths.get("savefiles","_" + user.getPseudo());
 
+		System.out.println("\nSavefile avant");
+		for(User u : userList)
+			System.out.println(u.toString());
+
 		try {
+
 			//si le savefile existe
 			if(new File(path.toString()).exists()) {
 				List<String> file = Files.readAllLines(path);
@@ -78,10 +92,25 @@ public class Savefile {
 
 				//recuperer l'historique que si y'a déjà un savefile qui existe
 				if (line.hasNext()) {
+
+					//USERLIST
+					int nbUsers = Integer.parseInt(line.next());
+					for (int i = 0; i < nbUsers; i++) {
+						String pseudo = line.next();
+						String ip = line.next();
+
+						if(getUserFromPseudo(userList, pseudo, ip)==null){//il pas dans la liste
+							User u = new User(pseudo, ip);
+							u.setOnline(false);
+							userList.add(u);
+						}
+					}
+
+					//SESSIONS
 					int nbSessions = Integer.parseInt(line.next());
-					//System.out.println("nbsession : " + nbSessions);
 					for (int i = 0; i < nbSessions; i++) {
 
+						//PARTICIPANTS
 						ArrayList<User> participants = new ArrayList<>();
 
 						int nbParticipants = Integer.parseInt(line.next());
@@ -90,32 +119,36 @@ public class Savefile {
 							String ip = line.next();
 
 							User participant = getUserFromPseudo(userList, pseudo, ip);
-							if(participant==null){//si il se trouve pas dans userLsit c'est qu'il est déco
+							if(participant==null){//si il se trouve pas dans userList c'est qu'il est déco
 								participant = new User(pseudo, ip);
 								participant.setOnline(false);
 							}
 							participants.add(participant);
 						}
 
+						//MESSAGES
 						ArrayList<Message> historique = new ArrayList<>();
 
 						int nbMessages = Integer.parseInt(line.next());
 						for (int h = 0; h < nbMessages; h++) {
-							//							pseudo		message		date
 							String pseudo = line.next();
 							String message = line.next();
 							String heure = line.next();
 							DateFormat format = new SimpleDateFormat("HH:mm");
-							//System.out.println("heure : " + heure);
 							Date date = format.parse(heure);
 							historique.add(new Message(new User(pseudo, ""), message, date));
 						}
 
+						//AJOUT DE LA SESSION
 						Session s = user.newSession(participants);
 						s.setHistorique(historique);
 					}
 				}
 			}
+
+			System.out.println("\nSavefile après");
+			for(User u : userList)
+				System.out.println(u.toString());
 		}
 		catch (IOException | ParseException e) {
 			e.printStackTrace();

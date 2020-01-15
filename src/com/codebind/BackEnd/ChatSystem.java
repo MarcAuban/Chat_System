@@ -65,7 +65,7 @@ public ChatSystem(Receiver receiver, BlockingQueue<String> queue){
 		receiver.deconnexion();
 		if(!(this.user == null)){
 			Sender.broadcast("deconnexion\n" + this.user.toString());
-			Savefile.save(this.user);
+			Savefile.save(this.user, this.userList);
 		}
 		Sender.send("127.0.0.1", "débloque le receive");
 	}
