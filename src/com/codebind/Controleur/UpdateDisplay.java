@@ -63,20 +63,22 @@ public class UpdateDisplay implements Runnable{
 
                 listUserConnected.setModel(modelUserConnected);
 
-                if(sessionList.size()>0 && app.getUsersConnected().size()>1) {
+                if(sessionList.size()>0) {
                     for (Session s : sessionList) {
-                        for (User user : s.getParticipants()) {
-                            if (user!=null && !user.getPseudo().equals(app.getUser().getPseudo())) {
-                                //ne séléctionne qu'un seul pseudo au lieu de plusieurs
-                                pseudo = user.getPseudo();
+                        if (!s.isDisplayed()){
+                            for (User user : s.getParticipants()) {
+                                if (user != null && !user.getPseudo().equals(app.getUser().getPseudo())) {
+                                    //ne séléctionne qu'un seul pseudo au lieu de plusieurs
+                                    pseudo = user.getPseudo();
+                                }
                             }
-                        }
-                        if(pseudo!=null && !s.isDisplayed()) {
-                            s.setDisplayed(true);
-                            model.addElement(pseudo);
-                            listSession.setModel(model);
-                            listSession.setSelectedIndex(listSession.getLastVisibleIndex());
-                            CurrentSession.setText(pseudo);
+                            if (pseudo != null) {
+                                s.setDisplayed(true);
+                                model.addElement(pseudo);
+                                listSession.setModel(model);
+                                listSession.setSelectedIndex(listSession.getLastVisibleIndex());
+                                CurrentSession.setText(pseudo);
+                            }
                         }
                     }
                 }
@@ -127,8 +129,8 @@ public class UpdateDisplay implements Runnable{
     {
         this.pseudo = pseudo;
     }
-    public void showHistory(Session session)
-    {
+
+    public void showHistory(Session session) {
 
         SimpleAttributeSet rightAlign = new SimpleAttributeSet();
         StyleConstants.setAlignment(rightAlign,StyleConstants.ALIGN_RIGHT);
