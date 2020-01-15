@@ -26,7 +26,6 @@ public class Application extends JFrame{
 	private Session s;
 	private UpdateDisplay updateDisplay;
 
-
 	public Application(ChatSystem app,String name) {
 
 		super("ChatSystem");
