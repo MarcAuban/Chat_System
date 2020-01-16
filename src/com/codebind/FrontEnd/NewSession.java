@@ -7,11 +7,10 @@ import javax.swing.*;
 import java.util.ArrayList;
 
 public class NewSession extends JFrame {
-    public JList<String> list1;
+    private JList<String> list1;
     private JPanel panel1;
-    public JButton cancelButton;
-    public JButton OKButton;
-
+    private JButton cancelButton;
+    private JButton OKButton;
     private ChatSystem app;
 
     public NewSession(ChatSystem app, DefaultListModel<String> modelApp) {
@@ -47,7 +46,7 @@ public class NewSession extends JFrame {
         });
     }
 
-    public void AjoutSession(){
+    private void AjoutSession(){
         ArrayList<User> ListUser = new ArrayList<>();
         ListUser.add(app.getUserFromPseudo(list1.getSelectedValue()));
         ListUser.add(app.getUser());

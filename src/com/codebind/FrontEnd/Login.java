@@ -13,7 +13,8 @@ public class Login extends JFrame{
 	private JPanel panel1;
 	private JTextField textField1;
 	private JButton button1;
-	public ChatSystem app;
+	private ChatSystem app;
+
 	public Login() {
 		super("Login - ChatSystem");
 		setContentPane(panel1);
@@ -72,7 +73,7 @@ public class Login extends JFrame{
 		}
 	}
 
-	public void deconnexion(){
+	private void deconnexion(){
 		app.deconnexion();
 	}
 }

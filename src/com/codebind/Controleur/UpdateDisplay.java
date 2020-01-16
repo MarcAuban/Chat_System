@@ -117,7 +117,7 @@ public class UpdateDisplay implements Runnable{
         }
     }
 
-    public void initialisation(){
+    private void initialisation(){
         if(model.size()>0){
             listSession.setSelectedIndex(listSession.getLastVisibleIndex()+1);
             //System.out.println(model.toString());
@@ -136,13 +136,13 @@ public class UpdateDisplay implements Runnable{
     public void ChangeIndex(){
         textPane.setText("");
     }
-    
+
     public void ChangePseudo(String pseudo)
     {
         this.pseudo = pseudo;
     }
 
-    public void showHistory(Session session) {
+    private void showHistory(Session session) {
 
         SimpleAttributeSet rightAlign = new SimpleAttributeSet();
         StyleConstants.setAlignment(rightAlign,StyleConstants.ALIGN_RIGHT);
@@ -176,7 +176,7 @@ public class UpdateDisplay implements Runnable{
         }
     }
 
-    public void wipeHistory(){
+    private void wipeHistory(){
         textPane.setText("");
     }
 

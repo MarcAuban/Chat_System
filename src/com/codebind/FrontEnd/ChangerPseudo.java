@@ -7,8 +7,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class ChangerPseudo extends JFrame{
-    public JButton OKButton;
-    public JTextField textField;
+    private JButton OKButton;
+    private JTextField textField;
     private JPanel panel1;
     private JButton cancelButton;
     private ChatSystem app;
@@ -52,18 +52,18 @@ public class ChangerPseudo extends JFrame{
         });
         cancelButton.addActionListener(e -> dispose());
     }
-    public void changerPseudo(String newpseudo){
-        //System.out.println("Newpseudo : " +newpseudo);
+
+    private void changerPseudo(String newpseudo){
         if(!app.changerPseudo(newpseudo))
         { JOptionPane.showMessageDialog(
                         null, "Pseudo déjà pris", "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }
-    public void UpdatePseudo()
+
+    private void UpdatePseudo()
     {
         String name = textField.getText();
         changerPseudo(name);
         NameUser.setText("<html> Bienvenue "+ app.getUser().getPseudo() + " <br> </html>");
-        //System.out.println(app.getUser().getPseudo());
     }
 }

@@ -217,7 +217,7 @@ public class MainWindow extends JFrame{
 		});
 	}
 
-	public boolean CheckIsUserConnected(String pseudo){
+	private boolean CheckIsUserConnected(String pseudo){
 		User checked = app.getUserFromPseudo(pseudo);
 		if (checked == null) {
 			return false;
@@ -225,7 +225,7 @@ public class MainWindow extends JFrame{
 		return checked.isOnline();
 	}
 
-	public Session SelectedSession()
+	private Session SelectedSession()
 	{
 		if(list1.isSelectionEmpty()){
 			return null;
@@ -241,7 +241,7 @@ public class MainWindow extends JFrame{
 		}
 
 	}
-	public void SetNewSession(){
+	private void SetNewSession(){
 		NewSession newSession = new NewSession(app, model);
 		newSession.setSize(500,400);
 		newSession.setVisible(true);
@@ -249,7 +249,7 @@ public class MainWindow extends JFrame{
 		textField1.setEditable(true);
 	}
 
-	public void deconnexion(){
+	private void deconnexion(){
 		app.deconnexion();
 		updateDisplay.deconnexion();
 		JFrame frame = new Login();
@@ -257,21 +257,21 @@ public class MainWindow extends JFrame{
 		frame.setVisible(true);
 		frame.setLocationRelativeTo(null);
 	}
-	public void deconnexionWithOut(){
+	private void deconnexionWithOut(){
 		updateDisplay.deconnexion();
 		app.deconnexion();
 	}
 
 
-	public void SendMessage(String message){
+	private void SendMessage(String message){
 		if(!list1.isSelectionEmpty()) {
 			s = SelectedSession();
-			s.sendMsg(app.getUser(), message);
-			//updateDisplay.ChangeSession(s);
+			if(s!=null)
+				s.sendMsg(app.getUser(), message);
 		}
 	}
 
-	public void DeleteSession(){
+	private void DeleteSession(){
 		s = SelectedSession();
 
 		updateDisplay.ChangeSession(null);
