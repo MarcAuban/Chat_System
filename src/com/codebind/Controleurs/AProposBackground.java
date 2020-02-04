@@ -1,4 +1,4 @@
-package com.codebind.FrontEnd;
+package com.codebind.Controleurs;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,12 +9,12 @@ public class AProposBackground implements Runnable{
     private double angle=0;
     private boolean on=true;
 
-    AProposBackground(JPanel panel, JTextPane pane){
+    public AProposBackground(JPanel panel, JTextPane pane){
         this.panel = panel;
         this.pane = pane;
     }
 
-    AProposBackground(JPanel panel){
+    public AProposBackground(JPanel panel){
         this.panel = panel;
         this.pane = null;
     }

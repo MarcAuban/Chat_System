@@ -1,4 +1,4 @@
-package com.codebind.BackEnd;
+package com.codebind.Models;
 
 import java.util.Date;
 import java.text.SimpleDateFormat;

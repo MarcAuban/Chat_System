@@ -1,4 +1,6 @@
-package com.codebind.FrontEnd;
+package com.codebind.Views;
+
+import com.codebind.Controleurs.AProposBackground;
 
 import javax.swing.*;
 

@@ -1,6 +1,7 @@
-package com.codebind.FrontEnd;
+package com.codebind.Views;
 
-import com.codebind.BackEnd.ChatSystem;
+import com.codebind.Models.ChatSystem;
+import com.codebind.Controleurs.ControleurChangerPseudo;
 
 import javax.swing.*;
 import java.awt.event.KeyAdapter;
@@ -12,18 +13,17 @@ public class ChangerPseudo extends JFrame{
     private JPanel panel1;
     private JButton cancelButton;
     private ChatSystem app;
-    private JLabel NameUser;
     private JLabel label;
+    private ControleurChangerPseudo controleurChangerPseudo;
 
-    public ChangerPseudo(ChatSystem app,JLabel NameUser) {
+    public ChangerPseudo(ChatSystem app, ControleurChangerPseudo controleurChangerPseudo) {
         super("ChatSystem");
         setContentPane(panel1);
         this.app = app;
-        this.NameUser = NameUser;
+        this.controleurChangerPseudo = controleurChangerPseudo;
 
         OKButton.addActionListener(e -> {
-            UpdatePseudo();
-            textField.setText("");
+            cmdChangerPseudo();
             dispose();
         });
         textField.addKeyListener(new KeyAdapter() { // Enter KEY dans le textField -> Envoie message et print dans le textArea
@@ -31,11 +31,7 @@ public class ChangerPseudo extends JFrame{
             public void keyPressed(KeyEvent e) {
                 super.keyPressed(e);
                 if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    if(!textField.getText().equals(" ")) {
-                        UpdatePseudo();
-                        textField.setText("");
-                        dispose();
-                    }
+                    cmdChangerPseudo();
                 }
             }
         });
@@ -44,8 +40,7 @@ public class ChangerPseudo extends JFrame{
             public void keyPressed(KeyEvent e) {
                 super.keyPressed(e);
                 if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    UpdatePseudo();
-                    textField.setText("");
+                    cmdChangerPseudo();
                     dispose();
                 }
             }
@@ -53,17 +48,12 @@ public class ChangerPseudo extends JFrame{
         cancelButton.addActionListener(e -> dispose());
     }
 
-    private void changerPseudo(String newpseudo){
-        if(!app.changerPseudo(newpseudo))
-        { JOptionPane.showMessageDialog(
-                        null, "Pseudo déjà pris", "Erreur", JOptionPane.ERROR_MESSAGE);
-        }
+    public void cmdChangerPseudo(){
+        controleurChangerPseudo.actionChangerPseudo(textField.getText());
     }
 
-    private void UpdatePseudo()
-    {
-        String name = textField.getText();
-        changerPseudo(name);
-        NameUser.setText("<html> Bienvenue "+ app.getUser().getPseudo() + " <br> </html>");
+    public void updateWindow(){
+        textField.setText("");
     }
+
 }

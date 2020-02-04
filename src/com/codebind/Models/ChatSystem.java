@@ -1,4 +1,4 @@
-package com.codebind.BackEnd;
+package com.codebind.Models;
 
 import java.net.*;
 import java.util.ArrayList;
@@ -169,6 +169,9 @@ public ChatSystem(Receiver receiver, BlockingQueue<String> queue){
 				user.setPseudo(newPseudo);
 			}
 		}
+		for(Session s : this.user.getSessionList()){
+			s.setDisplayed(false);
+		}
 	}
 
 	private boolean isUnique(String pseudo){
@@ -259,9 +262,6 @@ public ChatSystem(Receiver receiver, BlockingQueue<String> queue){
 			*/
 			//splitReceived[1] est le pseudo et splitReceived[2] est l'ip de l'utilisateur
 			this.changerPseudo(splitReceived[1], splitReceived[3]);
-			for(Session s : this.user.getSessionList()){
-				s.setDisplayed(false);
-			}
 		}
 
 		if(splitReceived[0].equals("deconnexion")){
